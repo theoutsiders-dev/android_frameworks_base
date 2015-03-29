@@ -5633,6 +5633,13 @@ public final class Settings {
          */
         public static final String SENSOR_BLOCK = "sensor_block";
 
+         /**
+          * Screenshod sound enable, This is the noise made when taking a screesnhot
+          * Defaults to 1 - sounds enabled
+          * @hide
+          */
+         public static final String SCREENSHOT_SHUTTER_SOUND = "screenshot_shutter_sound";
+
         /**
          * Whether to show weather on lockscreen
          * @hide
