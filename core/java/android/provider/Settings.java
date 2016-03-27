@@ -4634,6 +4634,13 @@ public final class Settings {
         public static final int SYSTEM_THEME_STYLE_ELEGANT = 6;
 
         /**
+         * Whether to enable status and navigation bar color in battery saver mode.
+         * Heads up timeout configuration
+         * @hide
+         */
+        public static final String HEADS_UP_TIMEOUT = "heads_up_timeout";
+
+        /**
          * Double tap on lockscreen to sleep
          * @hide
          */
