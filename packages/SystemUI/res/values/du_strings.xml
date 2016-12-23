@@ -241,4 +241,6 @@
 
     <!-- Text for switch default data sub in expanded CellularTile -->
     <string name="use_data">Use %s for data</string>
+
+    <string name="recents_free_ram">Free RAM: %1$d MB</string>
 </resources>
