@@ -63,4 +63,8 @@
          near events -->
     <bool name="doze_brightness_sensor_reports_proximity" translatable="false">true</bool>
 
+    <!-- Burn in protection -->
+    <bool name="config_statusBarBurnInProtection">false</bool>
+    <integer name="config_shift_interval">60</integer>
+
 </resources>
