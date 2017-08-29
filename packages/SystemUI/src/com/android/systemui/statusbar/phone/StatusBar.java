@@ -5811,12 +5811,15 @@ public class StatusBar extends SystemUI implements DemoMode,
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                   Settings.System.LOCKSCREEN_ALBUM_ART_FILTER),
-                  false, this, UserHandle.USER_ALL);
+                    false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SWITCH_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LOCKSCREEN_DATE_SELECTION),
+                    false, this, UserHandle.USER_ALL);
+	    resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -5886,6 +5889,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.SWITCH_STYLE))) {
                 stockSwitchStyle();
                 updateSwitchStyle();
+            } else if (uri.equals(Settings.System.getUriFor(
+                Settings.System.DOUBLE_TAP_SLEEP_GESTURE))) {
+                setStatusBarWindowViewOptions();
             }
         }
 
