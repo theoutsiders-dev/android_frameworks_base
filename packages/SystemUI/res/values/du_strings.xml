@@ -26,4 +26,5 @@
     <!-- QS customizer -->
     <string name="drag_or_tap_to_add_tiles">Drag or tap to add/remove tiles</string>
 
+    <string name="statusbar_items_title">Statusbar icon</string>
 </resources>
