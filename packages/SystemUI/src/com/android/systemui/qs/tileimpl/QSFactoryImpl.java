@@ -58,6 +58,7 @@ import com.android.systemui.qs.tiles.UiModeNightTile;
 import com.android.systemui.qs.tiles.SyncTile;
 import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
+import com.android.systemui.qs.tiles.UsbTetherTile;
 import com.android.systemui.qs.tiles.UserTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
@@ -105,6 +106,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<HWKeysTile> mHWKeysTileProvider;
     private final Provider<NavBarTile> mNavBarTileProvider;
     private final Provider<FPSInfoTile> mFPSInfoTileProvider;
+    private final Provider<UsbTetherTile> mUsbTetherTileProvider;
 
     private QSTileHost mHost;
 
@@ -141,7 +143,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<AdbOverNetworkTile> adbOverNetworkTileProvider,
             Provider<HWKeysTile> hWKeysTileProvider,
             Provider<NavBarTile> navbarTileProvider,
-            Provider<FPSInfoTile> fpsInfoTileProvider) {
+            Provider<FPSInfoTile> fpsInfoTileProvider,
+            Provider<UsbTetherTile> usbTetherTileProvider) {
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
         mCellularTileProvider = cellularTileProvider;
@@ -175,6 +178,7 @@ public class QSFactoryImpl implements QSFactory {
         mHWKeysTileProvider = hWKeysTileProvider;
         mNavBarTileProvider = navbarTileProvider;
         mFPSInfoTileProvider = fpsInfoTileProvider;
+        mUsbTetherTileProvider = usbTetherTileProvider;
     }
 
     public void setHost(QSTileHost host) {
@@ -260,6 +264,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mNavBarTileProvider.get();
             case "fpsinfo":
                 return mFPSInfoTileProvider.get();
+            case "usb_tether":
+                return mUsbTetherTileProvider.get();
         }
 
         // Intent tiles.
