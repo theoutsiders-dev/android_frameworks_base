@@ -41,6 +41,7 @@ import com.android.systemui.qs.tiles.HeadsUpTile;
 import com.android.systemui.qs.tiles.HotspotTile;
 import com.android.systemui.qs.tiles.ImmersiveTile;
 import com.android.systemui.qs.tiles.IntentTile;
+import com.android.systemui.qs.tiles.LiveDisplayTile;
 import com.android.systemui.qs.tiles.LocationTile;
 import com.android.systemui.qs.tiles.MusicTile;
 import com.android.systemui.qs.tiles.NavBarTile;
@@ -143,6 +144,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new SoundTile(mHost);
             case "caffeine":
                 return new CaffeineTile(mHost);
+            case "livedisplay":
+                return new LiveDisplayTile(mHost);
         }
 
         // Intent tiles.
