@@ -212,4 +212,6 @@
 
   <!-- Pulse brightness -->
   <java-symbol type="integer" name="config_screenBrightnessPulse" />
+
+  <java-symbol type="integer" name="config_flashlightProximityTimeout" />
 </resources>
