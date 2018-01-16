@@ -220,9 +220,6 @@ public class KeyguardStatusView extends GridLayout implements
 
         mClockView = findViewById(R.id.clock_view);
         mClockView.setShowCurrentUserTime(true);
-        if (KeyguardClockAccessibilityDelegate.isNeeded(mContext)) {
-            mClockView.setAccessibilityDelegate(new KeyguardClockAccessibilityDelegate(mContext));
-        }
         mCustomClockView = findViewById(R.id.custom_clock_view);
         mTextClock = findViewById(R.id.custom_textclock_view);
         mDuClockView = findViewById(R.id.du_clock_view);
@@ -258,9 +255,6 @@ public class KeyguardStatusView extends GridLayout implements
         refreshOwnerInfoSize();
         refreshOwnerInfoFont();
 
-        // Disable elegant text height because our fancy colon makes the ymin value huge for no
-        // reason.
-        mClockView.setElegantTextHeight(false);
     }
 
     public void onThemeChanged(boolean useDarkTheme) {
@@ -1856,10 +1850,6 @@ public class KeyguardStatusView extends GridLayout implements
             }
 
             clockView24 = DateFormat.getBestDateTimePattern(locale, clockView24Skel);
-
-            // Use fancy colon.
-            clockView24 = clockView24.replace(':', '\uee01');
-            clockView12 = clockView12.replace(':', '\uee01');
 
             cacheKey = key;
         }
