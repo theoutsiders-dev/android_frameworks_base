@@ -199,4 +199,6 @@
        0 - Celsius
        1 - Fahrenheit -->
   <java-symbol type="integer" name="weather_lockscreen_default_unit" />
+
+  <java-symbol type="array" name="config_vendorPlatformSignatures" />
 </resources>
