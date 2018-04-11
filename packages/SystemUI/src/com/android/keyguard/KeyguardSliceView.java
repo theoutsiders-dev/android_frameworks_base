@@ -138,7 +138,7 @@ public class KeyguardSliceView extends LinearLayout implements View.OnClickListe
         super.onFinishInflate();
         mTitle = findViewById(R.id.title);
         mRow = findViewById(R.id.row);
-        mTextColor = Utils.getColorAttr(mContext, R.attr.wallpaperTextColor);
+        mTextColor = Utils.getColorAttrDefaultColor(mContext, R.attr.wallpaperTextColor);
         updateSettings();
     }
 
