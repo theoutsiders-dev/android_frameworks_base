@@ -33,8 +33,8 @@ import android.os.UserHandle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.provider.Settings;
-import android.database.ContentObserver;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -78,6 +78,7 @@ public class QSContainerImpl extends FrameLayout implements
 
     private Drawable mQsBackGround;
     private int mQsBackGroundAlpha;
+    private int mQsBackGroundColor;
 
     // custom headers
     private boolean mHeaderImageEnabled;
@@ -170,6 +171,9 @@ public class QSContainerImpl extends FrameLayout implements
             getContext().getContentResolver().registerContentObserver(Settings.System
                             .getUriFor(Settings.System.QS_PANEL_BG_ALPHA), false,
                     this, UserHandle.USER_ALL);
+            getContext().getContentResolver().registerContentObserver(Settings.System
+                    .getUriFor(Settings.System.QS_PANEL_BG_COLOR), false,
+                    this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -182,11 +186,15 @@ public class QSContainerImpl extends FrameLayout implements
         mQsBackGroundAlpha = Settings.System.getIntForUser(getContext().getContentResolver(),
                 Settings.System.QS_PANEL_BG_ALPHA, 255,
                 UserHandle.USER_CURRENT);
+        mQsBackGroundColor = Settings.System.getIntForUser(getContext().getContentResolver(),
+                Settings.System.QS_PANEL_BG_COLOR, Color.WHITE,
+                UserHandle.USER_CURRENT);
         setQsBackground();
     }
 
     private void setQsBackground() {
         if (mQsBackGround != null) {
+            mQsBackGround.setColorFilter(mQsBackGroundColor, PorterDuff.Mode.SRC_ATOP);
             mQsBackGround.setAlpha(mQsBackGroundAlpha);
             mBackground.setBackground(mQsBackGround);
         }
