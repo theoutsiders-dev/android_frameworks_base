@@ -48,6 +48,7 @@ import com.android.systemui.qs.tiles.NavBarTile;
 import com.android.systemui.qs.tiles.NfcTile;
 import com.android.systemui.qs.tiles.NightDisplayTile;
 import com.android.systemui.qs.tiles.RebootTile;
+import com.android.systemui.qs.tiles.ReadingModeTile;
 import com.android.systemui.qs.tiles.RotationLockTile;
 import com.android.systemui.qs.tiles.ScreenshotTile;
 import com.android.systemui.qs.tiles.ThemeTile;
@@ -146,6 +147,8 @@ public class QSFactoryImpl implements QSFactory {
                 return new CaffeineTile(mHost);
             case "livedisplay":
                 return new LiveDisplayTile(mHost);
+            case "reading_mode":
+                return new ReadingModeTile(mHost);
         }
 
         // Intent tiles.
