@@ -18,10 +18,12 @@ package com.android.systemui.qs;
 
 import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 
+import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.content.om.IOverlayManager;
 import android.database.ContentObserver;
 import android.graphics.Point;
 import android.graphics.drawable.TransitionDrawable;
@@ -29,6 +31,8 @@ import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
+import android.os.RemoteException;
+import android.os.ServiceManager;
 import android.os.UserHandle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
@@ -38,6 +42,7 @@ import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.util.Log;
 import android.widget.FrameLayout;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -80,6 +85,8 @@ public class QSContainerImpl extends FrameLayout implements
     private int mQsBackGroundAlpha;
     private int mQsBackGroundColor;
 
+    private IOverlayManager mOverlayManager;
+
     // custom headers
     private boolean mHeaderImageEnabled;
     private ImageView mBackgroundImage;
@@ -91,6 +98,8 @@ public class QSContainerImpl extends FrameLayout implements
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
+        mOverlayManager = IOverlayManager.Stub.asInterface(
+                ServiceManager.getService(Context.OVERLAY_SERVICE));
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(context);
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
         Handler handler = new Handler();
@@ -190,6 +199,21 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.QS_PANEL_BG_COLOR, Color.WHITE,
                 UserHandle.USER_CURRENT);
         setQsBackground();
+        if (isColorDark(mQsBackGroundColor)) {
+            try {
+                mOverlayManager.setEnabled("com.android.systemui.custom.theme.dark",
+                        true, ActivityManager.getCurrentUser());
+            } catch (RemoteException e) {
+                Log.w("QSContainerImpl", "Can't change qs theme", e);
+            }
+        } else {
+            try {
+                mOverlayManager.setEnabled("com.android.systemui.custom.theme.dark",
+                        false, ActivityManager.getCurrentUser());
+            } catch (RemoteException e) {
+                Log.w("QSContainerImpl", "Can't change qs theme", e);
+            }
+        }
     }
 
     private void setQsBackground() {
@@ -326,6 +350,17 @@ public class QSContainerImpl extends FrameLayout implements
         }
         return mSizePoint.y;
     }
+
+    private boolean isColorDark(int color) {
+        double darkness = 1 - ( 0.299 * Color.red(color) + 0.587 * Color.green(color)
+                + 0.114 * Color.blue(color))/255;
+        if (darkness < 0.5) {
+            return false; // It's a light color
+        } else {
+            return true; // It's a dark color
+        }
+    }
+
     @Override
     public void updateHeader(final Drawable headerImage, final boolean force) {
         post(new Runnable() {
