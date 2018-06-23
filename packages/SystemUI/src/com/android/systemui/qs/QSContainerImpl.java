@@ -152,6 +152,8 @@ public class QSContainerImpl extends FrameLayout implements
         setImportantForAccessibility(IMPORTANT_FOR_ACCESSIBILITY_NO);
         setMargins();
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
+        mColorExtractor = Dependency.get(SysuiColorExtractor.class);
+//      mColorExtractor.addOnColorsChangedListener(this);
         updateSettings();
     }
 
@@ -237,8 +239,9 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.SYSTEM_THEME_STYLE, 2, ActivityManager.getCurrentUser());
         if (mUserThemeSetting == 0) {
             // The system wallpaper defines if system theme should be light or dark.
-            WallpaperColors systemColors = mColorExtractor
-                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            WallpaperColors systemColors = null;
+            if (mColorExtractor != null)
+                 systemColors = mColorExtractor.getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
             mUseDarkTheme = systemColors != null
                     && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
         } else {
