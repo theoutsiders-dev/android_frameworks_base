@@ -541,6 +541,10 @@ public class StatusBar extends SystemUI implements DemoMode,
     private VisualizerView mVisualizerView;
 
     private boolean mWallpaperSupportsAmbientMode;
+
+    // LS visualizer on Ambient Display
+    private boolean mAmbientVisualizer;
+
     private final BroadcastReceiver mWallpaperChangedReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -3812,6 +3816,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
 
         mStatusBarStateController.setIsDozing(dozing);
+
+        if (mAmbientVisualizer && mDozing) {
+            mVisualizerView.setVisible(true);
+        }
     }
 
     private void updateKeyguardState() {
@@ -4660,6 +4668,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.SHOW_BACK_ARROW_GESTURE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED),
+                    false, this, UserHandle.USER_ALL);
+
         }
 
         @Override
@@ -4681,6 +4693,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setFpToDismissNotifications();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
+            } else if (uri.equals(Settings.Secure.getUriFor(
+                    Settings.Secure.AMBIENT_VISUALIZER_ENABLED))) {
+                setAmbientVis();
         }
             update();
     }
@@ -4697,6 +4712,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setFpToDismissNotifications();
             updateCorners();
             setHideArrowForBackGesture();
+            setAmbientVis();
         }
     }
 
@@ -4753,6 +4769,12 @@ public class StatusBar extends SystemUI implements DemoMode,
         if (getNavigationBarView() != null) {
             getNavigationBarView().updateBackArrowForGesture();
         }
+    }
+
+    private void setAmbientVis() {
+        mAmbientVisualizer = Settings.Secure.getIntForUser(
+                mContext.getContentResolver(), Settings.Secure.AMBIENT_VISUALIZER_ENABLED, 0,
+                UserHandle.USER_CURRENT) == 1;
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
