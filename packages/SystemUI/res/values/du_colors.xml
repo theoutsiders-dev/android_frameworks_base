@@ -15,4 +15,7 @@
 <resources>
     <!-- Color of the FOD view -->
     <color name="config_fodColor">#00ff00</color>
+
+    <!-- QS date color-->
+    <color name="qs_date_color">#FF4C4C4C</color>
 </resources>
