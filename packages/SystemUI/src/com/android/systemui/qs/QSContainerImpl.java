@@ -158,6 +158,7 @@ public class QSContainerImpl extends FrameLayout implements
         updateResources();
         updateStatusbarVisibility();
         mSizePoint.set(0, 0); // Will be retrieved on next measure pass.
+        updateSettings();
     }
 
     private class SettingsObserver extends ContentObserver {
