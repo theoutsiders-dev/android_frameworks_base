@@ -215,10 +215,12 @@
   <java-symbol type="string" name="config_SmartChargingSupspendValue" />
   <java-symbol type="string" name="config_SmartChargingResumeValue" />
 
-    <!-- Custom accent color -->
+  <!-- Custom accent color -->
   <java-symbol type="color" name="custom_accent_color" />
 
-     <!-- Custom fonts -->
+  <!-- Custom fonts -->
   <java-symbol type="style" name="TextAppearanceTitle" />
 
+  <!-- Whether device has a physical display cutout -->
+  <java-symbol type="bool" name="config_physicalDisplayCutout" />
 </resources>
