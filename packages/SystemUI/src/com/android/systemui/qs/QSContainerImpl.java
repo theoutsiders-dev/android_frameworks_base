@@ -153,7 +153,6 @@ public class QSContainerImpl extends FrameLayout implements
         setMargins();
         mQsBackGround = getContext().getDrawable(R.drawable.qs_background_primary);
         mColorExtractor = Dependency.get(SysuiColorExtractor.class);
-//      mColorExtractor.addOnColorsChangedListener(this);
         updateSettings();
     }
 
@@ -236,7 +235,7 @@ public class QSContainerImpl extends FrameLayout implements
                 Settings.System.QS_PANEL_BG_COLOR_WALL, Color.WHITE,
                 UserHandle.USER_CURRENT);
         mUserThemeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.SYSTEM_THEME_STYLE, 2, ActivityManager.getCurrentUser());
+                Settings.System.SYSTEM_THEME_STYLE, 0, ActivityManager.getCurrentUser());
         if (mUserThemeSetting == 0) {
             // The system wallpaper defines if system theme should be light or dark.
             WallpaperColors systemColors = null;
@@ -247,6 +246,9 @@ public class QSContainerImpl extends FrameLayout implements
         } else {
             mUseDarkTheme = mUserThemeSetting == 2;
             mUseBlackTheme = mUserThemeSetting == 3;
+            // Make sure we turn off dark theme if we plan using black
+            if (mUseBlackTheme)
+                mUseDarkTheme = false;
         }
         mCurrentColor = mSetQsFromWall ? mQsBackGroundColorWall : mQsBackGroundColor;
         setQsBackground();
