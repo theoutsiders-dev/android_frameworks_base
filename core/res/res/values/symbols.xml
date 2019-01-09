@@ -3429,4 +3429,6 @@
   <java-symbol type="bool" name="config_proximityCheckOnFingerprintWake" />
 
   <java-symbol type="integer" name="config_idleMaintSecs" />
+
+  <java-symbol type="bool" name="config_zramWriteback" />
 </resources>
