@@ -74,6 +74,10 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private View mOperatorNameFrame;
     private ContentResolver mContentResolver;
 
+    // Custom Carrier
+    private View mCustomCarrierLabel;
+    private int mShowCarrierLabel;
+
     // DU Logo
     private ImageView mDULogo;
     private boolean mShowLogo;
@@ -87,6 +91,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         void observe() {
             mContentResolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_LOGO),
+                    false, this, UserHandle.USER_ALL);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_CARRIER),
                     false, this, UserHandle.USER_ALL);
         }
 
@@ -136,6 +143,7 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         Dependency.get(StatusBarIconController.class).addIconGroup(mDarkIconManager);
         mSystemIconArea = mStatusBar.findViewById(R.id.system_icon_area);
         mClockView = mStatusBar.findViewById(R.id.clock);
+        mCustomCarrierLabel = mStatusBar.findViewById(R.id.statusbar_carrier_text);
         mDULogo = (ImageView)mStatusBar.findViewById(R.id.status_bar_logo);
         Dependency.get(DarkIconDispatcher.class).addDarkReceiver(mDULogo);
         updateSettings(false);
@@ -399,6 +407,9 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
         mShowLogo = Settings.System.getIntForUser(
                 mContentResolver, Settings.System.STATUS_BAR_LOGO, 0,
                 UserHandle.USER_CURRENT) == 1;
+        mShowCarrierLabel = Settings.System.getIntForUser(
+                mContentResolver, Settings.System.STATUS_BAR_CARRIER, 1,
+                UserHandle.USER_CURRENT);
         if (mNotificationIconAreaInner != null) {
             if (mShowLogo) {
                 if (mNotificationIconAreaInner.getVisibility() == View.VISIBLE) {
