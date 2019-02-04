@@ -466,13 +466,11 @@ public class VisualizerView extends View
                 AsyncTask.execute(mLinkVisualizer);
                 animate()
                         .alpha(0.40f)
-                        .withEndAction(null)
                         .setDuration(800);
             } else {
                 mPaint.setColor(mColor);
                 animate()
                         .alpha(0.40f)
-                        .withEndAction(null)
                         .setDuration(800);
             }
         } else if (getVisibility() == View.VISIBLE && mVisible && mPlaying
@@ -482,14 +480,12 @@ public class VisualizerView extends View
                 AsyncTask.execute(mLinkVisualizer);
                 animate()
                         .alpha(1f)
-                        .withEndAction(null)
                         .setDuration(800);
                 if (mLavaLampEnabled) mLavaLamp.start();
             } else {
                 mPaint.setColor(mColor);
                 animate()
                         .alpha(1f)
-                        .withEndAction(null)
                         .setDuration(800);
             }
         } else {
