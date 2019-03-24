@@ -1281,9 +1281,11 @@ public final class SystemServer {
                 traceEnd();
             }
 
-            traceBeginAndSlog("StartDockObserver");
-            mSystemServiceManager.startService(DockObserver.class);
-            traceEnd();
+            if (!context.getResources().getBoolean(R.bool.config_enableDreamlinerService)) {
+                traceBeginAndSlog("StartDockObserver");
+                mSystemServiceManager.startService(DockObserver.class);
+                traceEnd();
+            }
 
             if (isWatch) {
                 traceBeginAndSlog("StartThermalObserver");
