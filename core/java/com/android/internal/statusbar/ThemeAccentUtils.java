@@ -135,6 +135,7 @@ public class ThemeAccentUtils {
         "com.havoc.themes.darkaf", // 30
         "com.havoc.themes.almostblack", // 31
         "com.havoc.themes.black", // 32
+        "com.havoc.themes.blackpearl", // 33
     };
 
     private static final String[] DARK_THEMES = {
