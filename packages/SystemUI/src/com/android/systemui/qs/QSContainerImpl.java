@@ -19,8 +19,10 @@ package com.android.systemui.qs;
 import static android.app.StatusBarManager.DISABLE2_QUICK_SETTINGS;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
+import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.ContentObserver;
 import android.graphics.Point;
@@ -30,6 +32,8 @@ import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
 import android.os.Handler;
 import android.os.UserHandle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.view.View;
@@ -37,8 +41,10 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.du.header.StatusBarHeaderMachine;
+import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.qs.customize.QSCustomizer;
 
 /**
@@ -46,6 +52,9 @@ import com.android.systemui.qs.customize.QSCustomizer;
  */
 public class QSContainerImpl extends FrameLayout implements
         StatusBarHeaderMachine.IStatusBarHeaderMachineObserver {
+
+    private static final ComponentName CUSTOM_HEADERS_SETTING_COMPONENT = new ComponentName(
+            "com.android.settings", "com.android.settings.Settings$CustomHeadersActivity");
 
     private final Point mSizePoint = new Point();
 
@@ -71,6 +80,7 @@ public class QSContainerImpl extends FrameLayout implements
     private boolean mLandscape;
     private boolean mQsBackgroundAlpha;
     private boolean mForceHideQsStatusBar;
+    private final Vibrator mVibrator;
 
     public QSContainerImpl(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -78,6 +88,7 @@ public class QSContainerImpl extends FrameLayout implements
         SettingsObserver settingsObserver = new SettingsObserver(mHandler);
         settingsObserver.observe();
         mStatusBarHeaderMachine = new StatusBarHeaderMachine(context);
+        mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     @Override
@@ -94,6 +105,18 @@ public class QSContainerImpl extends FrameLayout implements
         mSideMargins = getResources().getDimensionPixelSize(R.dimen.notification_side_paddings);
         mBackgroundImage = findViewById(R.id.qs_header_image_view);
         mBackgroundImage.setClipToOutline(true);
+        mBackgroundImage.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Dependency.get(ActivityStarter.class).startActivity(
+                        new Intent().setComponent(CUSTOM_HEADERS_SETTING_COMPONENT),
+                        true /* dismissShade */);
+                mVibrator.vibrate(
+                        VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
+                return false;
+            }
+
+        });
         mForceHideQsStatusBar = mContext.getResources().getBoolean(R.bool.qs_status_bar_hidden);
         updateSettings();
         updateResources();
