@@ -6541,6 +6541,15 @@ public final class Settings {
         public static final String SETTINGS_SPACER = "settings_spacer";
 
         /**
+         * Accent Color
+         * @hide
+         */
+        public static final String ACCENT_COLOR = "accent_color";
+
+        /** @hide */
+        private static final Validator ACCENT_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6689,6 +6698,7 @@ public final class Settings {
             HIDE_SMART_REPLIES,
             HEADSET_CONNECT_PLAYER,
             NOTIFICATION_HEADERS,
+            ACCENT_COLOR,
         };
 
         /**
@@ -6908,6 +6918,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_WALL);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_FW);
             PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_ACCENT);
+            PRIVATE_SETTINGS.add(ACCENT_COLOR);
         }
 
         /**
@@ -7101,6 +7112,7 @@ public final class Settings {
             VALIDATORS.put(FORCE_FULLSCREEN_CUTOUT_APPS, FORCE_FULLSCREEN_CUTOUT_APPS_VALIDATOR);
             VALIDATORS.put(HEADSET_CONNECT_PLAYER, HEADSET_CONNECT_PLAYER_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_HEADERS, NOTIFICATION_HEADERS_VALIDATOR);
+            VALIDATORS.put(ACCENT_COLOR, ACCENT_COLOR_VALIDATOR);
         }
 
         /**

@@ -313,6 +313,8 @@ public class StatusBar extends SystemUI implements DemoMode,
     public static final String SYSTEM_DIALOG_REASON_RECENT_APPS = "recentapps";
     static public final String SYSTEM_DIALOG_REASON_SCREENSHOT = "screenshot";
 
+    private static final String ACCENT_COLOR_PROP = "persist.sys.du.accent_color";
+
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
     private static final String BANNER_ACTION_SETUP =
@@ -2400,6 +2402,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_PANEL_BG_COLOR_WALL),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.ACCENT_COLOR),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -2460,6 +2465,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT))) {
                 mQSPanel.getHost().reloadAllTiles();
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.ACCENT_COLOR))) {
+                applyAccentColor();
             }
             update();
         }
@@ -2486,6 +2493,23 @@ public class StatusBar extends SystemUI implements DemoMode,
         updateChargingAnimation();
         updateQSPanel();
         handleCutout(null);
+        applyAccentColor();
+        }
+    }
+
+    private void applyAccentColor() {
+        int intColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.ACCENT_COLOR, 0xFF1A73E8,
+                UserHandle.USER_CURRENT);
+        String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
+        String accentVal = SystemProperties.get(ACCENT_COLOR_PROP);
+        if (!accentVal.equals(colorHex)) {
+            SystemProperties.set(ACCENT_COLOR_PROP, colorHex);
+            try {
+                mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
+                mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
+                mOverlayManager.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
+            } catch (Exception e) { }
         }
     }
 
