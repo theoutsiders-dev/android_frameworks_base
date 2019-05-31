@@ -70,4 +70,7 @@
     <!-- Bootleg unneccesary gradient declaration | Just for our shishu bars -->
     <color name="bootleg_accent_gradient_end_color">#00000000</color>
 
+    <!-- Custom accent color -->
+    <color name="custom_accent_color">@color/accent_device_default_light</color>
+
 </resources>
