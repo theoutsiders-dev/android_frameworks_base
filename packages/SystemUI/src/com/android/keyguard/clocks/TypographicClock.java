@@ -78,7 +78,7 @@ public class TypographicClock extends TextView {
         }
 
         SpannedString rawFormat = (SpannedString) mResources.getQuantityText(R.plurals.type_clock_header, hours);
-        Annotation[] annotationArr = (Annotation[]) rawFormat.getSpans(0, rawFormat.length(), Annotation.class);
+        Annotation[] annotationArr = rawFormat.getSpans(0, rawFormat.length(), Annotation.class);
         SpannableString colored = new SpannableString(rawFormat);
         for (Annotation annotation : annotationArr) {
             if ("color".equals(annotation.getValue())) {
@@ -109,12 +109,8 @@ public class TypographicClock extends TextView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        Calendar calendar = mTime;
-        TimeZone timeZone = mTimeZone;
-        if (timeZone == null) {
-            timeZone = TimeZone.getDefault();
-        }
-        calendar.setTimeZone(timeZone);
+        TimeZone timeZone = mTimeZone == null ? TimeZone.getDefault() : mTimeZone;
+        mTime.setTimeZone(timeZone);
         onTimeChanged();
 
         IntentFilter filter = new IntentFilter();
