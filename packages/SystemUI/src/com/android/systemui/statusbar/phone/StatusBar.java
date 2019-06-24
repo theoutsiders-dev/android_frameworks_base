@@ -5815,6 +5815,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SWITCH_STYLE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_DATE_SELECTION),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -5863,7 +5866,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setForceAmbient();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK)) ||
                    uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_INFO)) ||
-                   uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK_SELECTION))) {
+                   uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_CLOCK_SELECTION)) ||
+                   uri.equals(Settings.System.getUriFor(Settings.System.LOCKSCREEN_DATE_SELECTION))) {
                 updateKeyguardStatusSettings();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.KEYGUARD_MULTIUSER_SWITCH))) {
                 updateKeyguardStatusBarSettings();
