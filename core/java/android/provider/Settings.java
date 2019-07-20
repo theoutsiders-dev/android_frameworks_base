@@ -3878,17 +3878,6 @@ public final class Settings {
         public static final Validator NOTIFICATION_LIGHT_PULSE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Wheter to show network traffic indicator in statusbar
-         * @hide
-         */
-        public static final String NETWORK_TRAFFIC_STATE = "network_traffic_state";
-         /**
-         * Network traffic inactivity threshold (default is 1 kBs)
-         * @hide
-         */
-        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
-
-        /**
          * Show pointer location on screen?
          * 0 = no
          * 1 = yes
@@ -4394,6 +4383,16 @@ public final class Settings {
                 }
             }
         };
+
+        /**
+         * Weather lockscreen temperature scale
+         * @hide
+         */
+        public static final String WEATHER_LOCKSCREEN_UNIT = "weather_lockscreen_unit";
+
+        /** @hide */
+        private static final Validator WEATHER_LOCKSCREEN_UNIT_VALIDATOR =
+               BOOLEAN_VALIDATOR;
 
         /**
          * Custom button brightness value for manual mode
@@ -4940,12 +4939,6 @@ public final class Settings {
         public static final String CUSTOM_CARRIER_LABEL = "custom_carrier_label";
 
         /**
-         * Whether to display the 4g or lte network icon in the statusbar
-         * @hide
-         */
-        public static final String SHOW_LTE_FOURGEE = "show_lte_fourgee";
-
-        /**
          * Whether to show arrows in the navigation bar while typing
          * @hide
          */
@@ -4960,12 +4953,6 @@ public final class Settings {
          /** @hide */
         public static final Validator FACE_AUTO_UNLOCK_VALIDATOR =
                 BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to disable showing arrows in network traffic indicators
-         * @hide
-         */
-        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
 
         /**
          * Whether user can swap navigation lateral keys.
@@ -5244,6 +5231,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(SYSTEM_THEME_STYLE);
+            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
+            PRIVATE_SETTINGS.add(WEATHER_LOCKSCREEN_UNIT);
             PRIVATE_SETTINGS.add(FACE_AUTO_UNLOCK);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS);
@@ -5348,6 +5337,7 @@ public final class Settings {
             VALIDATORS.put(SHOW_BATTERY_PERCENT, SHOW_BATTERY_PERCENT_VALIDATOR);
             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
             VALIDATORS.put(NAVIGATION_BAR_ENABLED, NAVIGATION_BAR_ENABLED_VALIDATOR);
+            VALIDATORS.put(WEATHER_LOCKSCREEN_UNIT, WEATHER_LOCKSCREEN_UNIT_VALIDATOR);
             VALIDATORS.put(FACE_AUTO_UNLOCK, FACE_AUTO_UNLOCK_VALIDATOR);
             VALIDATORS.put(CUSTOM_BUTTON_BRIGHTNESS,
                     CUSTOM_BUTTON_BRIGHTNESS_VALIDATOR);
