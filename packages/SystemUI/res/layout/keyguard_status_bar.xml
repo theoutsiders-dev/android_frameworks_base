@@ -75,7 +75,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="?attr/wallpaperTextColorSecondary"
         android:singleLine="true"
-        android:textAppearance="@style/TextAppearance.StatusBar.CarrierLabel"
         systemui:showMissingSim="true"
         systemui:showAirplaneMode="true" />
 
