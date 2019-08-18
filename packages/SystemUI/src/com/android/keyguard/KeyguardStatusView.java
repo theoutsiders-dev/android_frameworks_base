@@ -905,12 +905,99 @@ public class KeyguardStatusView extends GridLayout implements
         if (ownerinfoFont == 35) {
             mOwnerInfo.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
         }
+        if (ownerinfoFont == 36) {
+            mOwnerInfo.setTypeface(Typeface.create("abelreg", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 37) {
+            mOwnerInfo.setTypeface(Typeface.create("adamcg-pro", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 38) {
+            mOwnerInfo.setTypeface(Typeface.create("adventpro", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 39) {
+            mOwnerInfo.setTypeface(Typeface.create("alexana-neue", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 40) {
+            mOwnerInfo.setTypeface(Typeface.create("alien-league", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 41) {
+            mOwnerInfo.setTypeface(Typeface.create("archivonar", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 42) {
+            mOwnerInfo.setTypeface(Typeface.create("autourone", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 43) {
+            mOwnerInfo.setTypeface(Typeface.create("azedo-light", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 44) {
+            mOwnerInfo.setTypeface(Typeface.create("badscript", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 45) {
+            mOwnerInfo.setTypeface(Typeface.create("bignoodle-regular", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 46) {
+            mOwnerInfo.setTypeface(Typeface.create("biko", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 47) {
+            mOwnerInfo.setTypeface(Typeface.create("cocobiker", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 48) {
+            mOwnerInfo.setTypeface(Typeface.create("fester", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 49) {
+            mOwnerInfo.setTypeface(Typeface.create("ginora-sans", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 50) {
+            mOwnerInfo.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 51) {
+            mOwnerInfo.setTypeface(Typeface.create("ibmplex-mono", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 52) {
+            mOwnerInfo.setTypeface(Typeface.create("jacklane", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 53) {
+            mOwnerInfo.setTypeface(Typeface.create("kellyslab", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 54) {
+            mOwnerInfo.setTypeface(Typeface.create("monad", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 55) {
+            mOwnerInfo.setTypeface(Typeface.create("noir", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 56) {
+            mOwnerInfo.setTypeface(Typeface.create("northfont", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 57) {
+            mOwnerInfo.setTypeface(Typeface.create("pompiere", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 58) {
+            mOwnerInfo.setTypeface(Typeface.create("qontra", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 59) {
+            mOwnerInfo.setTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 60) {
+            mOwnerInfo.setTypeface(Typeface.create("source-sans-pro", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 61) {
+            mOwnerInfo.setTypeface(Typeface.create("the-outbox", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 62) {
+            mOwnerInfo.setTypeface(Typeface.create("unionfont", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 63) {
+            mOwnerInfo.setTypeface(Typeface.create("vibur", Typeface.NORMAL));
+        }
+        if (ownerinfoFont == 64) {
+            mOwnerInfo.setTypeface(Typeface.create("voltaire", Typeface.NORMAL));
+        }
     }
 
     private void refreshLockFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockClockFont = isPrimary ? getLockClockFont() : 28;
+        int lockClockFont = isPrimary ? getLockClockFont() : 0;
 
         if (lockClockFont == 0) {
             mClockView.setTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
@@ -1019,13 +1106,79 @@ public class KeyguardStatusView extends GridLayout implements
         }
 	if (lockClockFont == 35) {
             mClockView.setTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 36) {
+            mClockView.setTypeface(Typeface.create("abelreg", Typeface.NORMAL));
+        }
+        if (lockClockFont == 37) {
+            mClockView.setTypeface(Typeface.create("adventpro", Typeface.NORMAL));
+        }
+        if (lockClockFont == 39) {
+            mClockView.setTypeface(Typeface.create("alien-league", Typeface.NORMAL));
+        }
+        if (lockClockFont == 39) {
+            mClockView.setTypeface(Typeface.create("bignoodle-italic", Typeface.NORMAL));
+        }
+        if (lockClockFont == 40) {
+            mClockView.setTypeface(Typeface.create("biko", Typeface.NORMAL));
+        }
+        if (lockClockFont == 41) {
+            mClockView.setTypeface(Typeface.create("blern", Typeface.NORMAL));
+        }
+        if (lockClockFont == 42) {
+            mClockView.setTypeface(Typeface.create("cherryswash", Typeface.NORMAL));
+        }
+        if (lockClockFont == 43) {
+            mClockView.setTypeface(Typeface.create("codystar", Typeface.NORMAL));
+        }
+        if (lockClockFont == 44) {
+            mClockView.setTypeface(Typeface.create("ginora-sans", Typeface.NORMAL));
+        }
+        if (lockClockFont == 45) {
+            mClockView.setTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+        }
+        if (lockClockFont == 46) {
+            mClockView.setTypeface(Typeface.create("inkferno", Typeface.NORMAL));
+        }
+        if (lockClockFont == 47) {
+            mClockView.setTypeface(Typeface.create("jura-reg", Typeface.NORMAL));
+        }
+        if (lockClockFont == 48) {
+            mClockView.setTypeface(Typeface.create("kellyslab", Typeface.NORMAL));
+        }
+        if (lockClockFont == 49) {
+            mClockView.setTypeface(Typeface.create("metropolis1920", Typeface.NORMAL));
+        }
+        if (lockClockFont == 50) {
+            mClockView.setTypeface(Typeface.create("pompiere", Typeface.NORMAL));
+        }
+        if (lockClockFont == 51) {
+            mClockView.setTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
+        }
+        if (lockClockFont == 52) {
+            mClockView.setTypeface(Typeface.create("riviera", Typeface.NORMAL));
+        }
+        if (lockClockFont == 53) {
+            mClockView.setTypeface(Typeface.create("sedgwick-ave", Typeface.NORMAL));
+        }
+        if (lockClockFont == 54) {
+            mClockView.setTypeface(Typeface.create("source-sans-pro", Typeface.NORMAL));
+        }
+        if (lockClockFont == 55) {
+            mClockView.setTypeface(Typeface.create("unionfont", Typeface.NORMAL));
+        }
+        if (lockClockFont == 56) {
+            mClockView.setTypeface(Typeface.create("vibur", Typeface.NORMAL));
+        }
+        if (lockClockFont == 57) {
+            mClockView.setTypeface(Typeface.create("voltaire", Typeface.NORMAL));
 	}
     }
 
     private void refreshLockDateFont() {
         final Resources res = getContext().getResources();
         boolean isPrimary = UserHandle.getCallingUserId() == UserHandle.USER_OWNER;
-        int lockDateFont = isPrimary ? getLockDateFont() : 28;
+        int lockDateFont = isPrimary ? getLockDateFont() : 0;
         if (lockDateFont == 0) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("sans-serif", Typeface.NORMAL));
         }
@@ -1133,6 +1286,87 @@ public class KeyguardStatusView extends GridLayout implements
         }
 	if (lockDateFont == 35) {
             mKeyguardSlice.setViewsTypeface(Typeface.create("phantombold-sys", Typeface.NORMAL));
+        }
+        if (lockDateFont == 36) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("abelreg", Typeface.NORMAL));
+        }
+        if (lockDateFont == 37) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("adamcg-pro", Typeface.NORMAL));
+        }
+        if (lockDateFont == 38) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("adventpro", Typeface.NORMAL));
+        }
+        if (lockDateFont == 39) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("alien-league", Typeface.NORMAL));
+        }
+        if (lockDateFont == 40) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("archivonar", Typeface.NORMAL));
+        }
+        if (lockDateFont == 41) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("autourone", Typeface.NORMAL));
+        }
+        if (lockDateFont == 42) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("badscript", Typeface.NORMAL));
+        }
+        if (lockDateFont == 43) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("bignoodle-regular", Typeface.NORMAL));
+        }
+        if (lockDateFont == 44) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("biko", Typeface.NORMAL));
+        }
+        if (lockDateFont == 45) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("cherryswash", Typeface.NORMAL));
+        }
+        if (lockDateFont == 46) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("ginora-sans", Typeface.NORMAL));
+        }
+        if (lockDateFont == 47) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("googlesans-sys", Typeface.NORMAL));
+        }
+        if (lockDateFont == 48) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("ibmplex-mono", Typeface.NORMAL));
+        }
+        if (lockDateFont == 49) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("inkferno", Typeface.NORMAL));
+        }
+        if (lockDateFont == 50) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("instruction", Typeface.NORMAL));
+        }
+        if (lockDateFont == 51) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("jack-lane", Typeface.NORMAL));
+        }
+        if (lockDateFont == 52) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("kellyslab", Typeface.NORMAL));
+        }
+        if (lockDateFont == 53) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("monad", Typeface.NORMAL));
+        }
+        if (lockDateFont == 54) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("noir", Typeface.NORMAL));
+        }
+        if (lockDateFont == 55) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("outrun-future", Typeface.NORMAL));
+        }
+        if (lockDateFont == 56) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("pompiere", Typeface.NORMAL));
+        }
+        if (lockDateFont == 57) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("reemkufi", Typeface.NORMAL));
+        }
+        if (lockDateFont == 58) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("riviera", Typeface.NORMAL));
+        }
+        if (lockDateFont == 59) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("source-sans-pro", Typeface.NORMAL));
+        }
+        if (lockDateFont == 60) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("the-outbox", Typeface.NORMAL));
+        }
+        if (lockDateFont == 61) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("vibur", Typeface.NORMAL));
+        }
+        if (lockDateFont == 62) {
+            mKeyguardSlice.setViewsTypeface(Typeface.create("voltaire", Typeface.NORMAL));
         }
     }
 
