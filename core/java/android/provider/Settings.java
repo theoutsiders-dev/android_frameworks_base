@@ -4884,6 +4884,10 @@ public final class Settings {
          */
         public static final String STATUS_BAR_LOGO = "status_bar_logo";
 
+        /** @hide */
+        private static final Validator STATUS_BAR_LOGO_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
         /**
         * @hide
          * Whether to set a lower brightness level when enabling night mode
@@ -4971,6 +4975,39 @@ public final class Settings {
          */
         public static final String SWAP_NAVIGATION_KEYS = "swap_navigation_keys";
 
+         /**
+         * Whether to show the notification ticker on the status bar
+         * @hide
+         */
+        public static final String STATUS_BAR_SHOW_TICKER = "status_bar_show_ticker";
+
+         /** @hide */
+        private static final Validator STATUS_BAR_SHOW_TICKER_VALIDATOR = BOOLEAN_VALIDATOR;
+
+         /**
+         * Ticker animation
+         * 0: Fade animation
+         * 1: Scrolling ticker
+         */
+        public static final String STATUS_BAR_TICKER_ANIMATION_MODE =
+                "status_bar_ticker_animation_mode";
+
+         /** @hide */
+        private static final Validator STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
+         /**
+         * Status bar ticker duration in milliseconds.
+         *
+         * @hide
+         */
+        public static final String STATUS_BAR_TICKER_TICK_DURATION =
+                "status_bar_ticker_tick_duration";
+
+         /** @hide */
+        private static final Validator STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR =
+                ANY_INTEGER_VALIDATOR;
+
         /**
          * The enabled mode for the theme tile.
          * - ACCENT
@@ -5051,7 +5088,11 @@ public final class Settings {
             STATUSBAR_CLOCK_AM_PM_STYLE,
             STATUSBAR_CLOCK_DATE_DISPLAY,
             STATUSBAR_CLOCK_DATE_STYLE,
-            STATUSBAR_CLOCK_DATE_FORMAT
+            STATUSBAR_CLOCK_DATE_FORMAT,
+            STATUS_BAR_SHOW_TICKER,
+            STATUS_BAR_TICKER_ANIMATION_MODE,
+            STATUS_BAR_TICKER_TICK_DURATION,
+            STATUS_BAR_LOGO
         };
 
         /**
@@ -5119,6 +5160,10 @@ public final class Settings {
             PUBLIC_SETTINGS.add(HAPTIC_FEEDBACK_ENABLED);
             PUBLIC_SETTINGS.add(SHOW_WEB_SUGGESTIONS);
             PUBLIC_SETTINGS.add(VIBRATE_WHEN_RINGING);
+            PUBLIC_SETTINGS.add(STATUS_BAR_LOGO);
+            PUBLIC_SETTINGS.add(STATUS_BAR_SHOW_TICKER);
+            PUBLIC_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
+            PUBLIC_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
         }
 
         /**
@@ -5181,7 +5226,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(SYSTEM_THEME_STYLE);
-            PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(FACE_AUTO_UNLOCK);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_USE_SCREEN_BRIGHTNESS);
@@ -5304,6 +5348,10 @@ public final class Settings {
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_DISPLAY, STATUSBAR_CLOCK_DATE_DISPLAY_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_STYLE, STATUSBAR_CLOCK_DATE_STYLE_VALIDATOR);
             VALIDATORS.put(STATUSBAR_CLOCK_DATE_FORMAT, STATUSBAR_CLOCK_DATE_FORMAT_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_LOGO, STATUS_BAR_LOGO_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_SHOW_TICKER, STATUS_BAR_SHOW_TICKER_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_TICKER_ANIMATION_MODE, STATUS_BAR_TICKER_ANIMATION_MODE_VALIDATOR);
+            VALIDATORS.put(STATUS_BAR_TICKER_TICK_DURATION, STATUS_BAR_TICKER_TICK_DURATION_VALIDATOR);
         }
 
         /**
