@@ -108,8 +108,13 @@ public class CustomAnalogClock extends View {
 
         mMinuteHand = a.getDrawable(R.styleable.CustomAnalogClock_custom_hand_minute);
 
-        final boolean useDarkTheme = ThemeAccentUtils.isUsingDarkTheme(
-                mOverlayManager, ActivityManager.getCurrentUser());
+        final boolean useDarkTheme = (ThemeAccentUtils.isUsingDarkTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()) || ThemeAccentUtils.isUsingBlackTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()) || ThemeAccentUtils.isUsingExtendedTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()) || ThemeAccentUtils.isUsingChocolateTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()) || ThemeAccentUtils.isUsingElegantTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()) || ThemeAccentUtils.isUsingShishuNightsTheme(
+                mOverlayManager, ActivityManager.getCurrentUser()));
         onThemeChanged(useDarkTheme, false);
 
         mDialAmbient = a.getDrawable(R.styleable.CustomAnalogClock_custom_clock_dial_ambient);

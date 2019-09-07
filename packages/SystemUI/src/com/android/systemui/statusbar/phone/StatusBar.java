@@ -2366,6 +2366,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         return ThemeAccentUtils.isUsingElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
+    public boolean isUsingShishuNightsTheme() {
+        return ThemeAccentUtils.isUsingShishuNightsTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
     // Unloads the stock dark theme
     public void unloadStockDarkTheme() {
         ThemeAccentUtils.unloadStockDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
@@ -4436,6 +4440,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean useExtendedTheme = false;
         boolean useBlackTheme = false;
         boolean useDarkTheme = false;
+        boolean useShishuNightsTheme = false;
         if (mCurrentTheme == 0) {
            // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -4453,6 +4458,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             useExtendedTheme = mCurrentTheme == 4;
             useChocolateTheme = mCurrentTheme == 5;
             useElegantTheme = mCurrentTheme == 6;
+            useShishuNightsTheme = mCurrentTheme == 7;
         }
 
         if (themeNeedsRefresh || isUsingDarkTheme() != useDarkTheme) {
@@ -4498,6 +4504,14 @@ public class StatusBar extends SystemUI implements DemoMode,
             ThemeAccentUtils.setLightElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useElegant);
             });
             mNotificationPanel.setLockscreenClockTheme(useElegantTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingShishuNightsTheme() != useShishuNightsTheme) {
+            final boolean useShishuNight = useShishuNightsTheme;
+            mUiOffloadThread.submit(() -> {
+            ThemeAccentUtils.setLightShishuNightsTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useShishuNight);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useShishuNightsTheme);
         }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it

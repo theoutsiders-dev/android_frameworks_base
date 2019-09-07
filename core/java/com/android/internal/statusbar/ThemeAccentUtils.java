@@ -111,6 +111,26 @@ public class ThemeAccentUtils {
         "com.google.android.apps.wellbeing.theme.chocolate", //6
     };
 
+    private static final String[] ELEGANT_THEMES = {
+        "com.android.system.theme.elegant", // 0
+        "com.android.settings.theme.elegant", // 1
+        "com.android.systemui.theme.elegant", // 2
+        "com.android.dialer.theme.elegant", //4
+        "com.android.contacts.theme.elegant", //5
+        "com.android.documentsui.theme.elegant", //6
+        "com.google.android.apps.wellbeing.theme.elegant", //7
+	"com.google.android.apps.gms.theme.elegant", //8
+    };
+
+    private static final String[] SHISHUNIGHTS_THEMES = {
+        "com.android.system.theme.shishunights", // 0
+        "com.android.settings.theme.shishunights", // 1
+        "com.android.systemui.theme.shishunights", // 2
+        "com.android.settings.intelligence.theme.shishunights", // 3
+        "com.google.android.apps.wellbeing.theme.shishunights", // 4
+        "com.android.documentsui.theme.shishunights", // 5
+    };
+
     private static final String[] QS_TILE_THEMES = {
         "default_qstile", // 0
         "com.android.systemui.qstile.squircle", // 1
@@ -222,11 +242,23 @@ public class ThemeAccentUtils {
         return themeInfo != null && themeInfo.isEnabled();
      }
 
+    // Check for the extended system theme
+    public static boolean isUsingShishuNightsTheme(IOverlayManager om, int userId) {
+        OverlayInfo themeInfo = null;
+        try {
+            themeInfo = om.getOverlayInfo(SHISHUNIGHTS_THEMES[0],
+                    userId);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
+        return themeInfo != null && themeInfo.isEnabled();
+     }
+
     public static void setLightBlackTheme(IOverlayManager om, int userId, boolean useBlackTheme) {
         for (String theme : BLACK_THEMES) {
                 try {
                     om.setEnabled(theme,
-                        useBlackTheme, userId);
+                    useBlackTheme, userId);
                     unfuckBlackWhiteAccent(om, userId);
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
@@ -238,7 +270,19 @@ public class ThemeAccentUtils {
         for (String theme : EXTENDED_THEMES) {
                 try {
                     om.setEnabled(theme,
-                        useExtendedTheme, userId);
+                    useExtendedTheme, userId);
+                    unfuckBlackWhiteAccent(om, userId);
+                } catch (RemoteException e) {
+                    Log.w(TAG, "Can't change theme", e);
+                }
+        }
+    }
+
+    public static void setLightShishuNightsTheme(IOverlayManager om, int userId, boolean useShishuNightsTheme) {
+        for (String theme : SHISHUNIGHTS_THEMES) {
+                try {
+                    om.setEnabled(theme,
+                    useShishuNightsTheme, userId);
                     unfuckBlackWhiteAccent(om, userId);
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
@@ -250,7 +294,7 @@ public class ThemeAccentUtils {
         for (String theme : CHOCOLATE_THEMES) {
                 try {
                     om.setEnabled(theme,
-                        useChocolateTheme, userId);
+                    useChocolateTheme, userId);
                     unfuckBlackWhiteAccent(om, userId);
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
@@ -262,7 +306,7 @@ public class ThemeAccentUtils {
         for (String theme : ELEGANT_THEMES) {
                 try {
                     om.setEnabled(theme,
-                        useElegantTheme, userId);
+                    useElegantTheme, userId);
                     unfuckBlackWhiteAccent(om, userId);
                 } catch (RemoteException e) {
                     Log.w(TAG, "Can't change theme", e);
@@ -275,7 +319,7 @@ public class ThemeAccentUtils {
         for (String theme : DARK_THEMES) {
             try {
                 om.setEnabled(theme,
-                        useDarkTheme, userId);
+                useDarkTheme, userId);
                 if (useDarkTheme) {
                     unloadStockDarkTheme(om, userId);
                 }
@@ -296,7 +340,7 @@ public class ThemeAccentUtils {
     public static void unfuckBlackWhiteAccent(IOverlayManager om, int userId) {
         OverlayInfo themeInfo = null;
         try {
-            if (isUsingDarkTheme(om, userId) || isUsingBlackTheme(om, userId) || isUsingExtendedTheme(om, userId) || isUsingChocolateTheme(om, userId) || isUsingElegantTheme(om, userId)) {
+            if (isUsingDarkTheme(om, userId) || isUsingBlackTheme(om, userId) || isUsingExtendedTheme(om, userId) || isUsingChocolateTheme(om, userId) || isUsingElegantTheme(om, userId) || isUsingShishuNightsTheme(om, userId)) {
                 themeInfo = om.getOverlayInfo(ACCENTS[20],
                         userId);
                 if (themeInfo != null && themeInfo.isEnabled()) {
@@ -357,6 +401,17 @@ public class ThemeAccentUtils {
             unloadAccents(om, userId);
             }
 
+            if(isUsingShishuNightsTheme(om, userId)) {
+            try {
+                om.setEnabled(SHISHUNIGHTS_THEMES[0],
+                        true, userId);
+            } catch (RemoteException e) {
+                Log.w(TAG, "Can't change theme", e);
+            }
+            } else {
+            unloadAccents(om, userId);
+            }
+
         } else if (accentSetting < 20) {
             try {
                 om.setEnabled(ACCENTS[accentSetting],
@@ -367,8 +422,7 @@ public class ThemeAccentUtils {
 
          }  else if (accentSetting == 20) {
             try {
-                // If using a dark, black or extendedUI theme we use the white accent, otherwise use the black accent
-                if (isUsingDarkTheme(om, userId) || isUsingBlackTheme(om, userId) || isUsingExtendedTheme(om, userId) || isUsingChocolateTheme(om, userId) || isUsingElegantTheme(om, userId)) {
+                 if (isUsingDarkTheme(om, userId) || isUsingBlackTheme(om, userId) || isUsingExtendedTheme(om, userId) || isUsingChocolateTheme(om, userId) || isUsingElegantTheme(om, userId) || isUsingShishuNightsTheme(om, userId)) {
                     om.setEnabled(ACCENTS[21],
                             true, userId);
                 } else {

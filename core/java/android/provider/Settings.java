@@ -4678,6 +4678,7 @@ public final class Settings {
          * 4 - force extendedUI
          * 5 - force chocolateUI
          * 6 - force Elegant UI
+         * 6 - force Shishu Nights
          * @hide
          */
         public static final String SYSTEM_THEME_STYLE = "system_theme_style";
@@ -4723,6 +4724,12 @@ public final class Settings {
          * @hide
          */
         public static final int SYSTEM_THEME_STYLE_ELEGANT = 6;
+
+        /**
+         * SYSTEM_THEME_STYLE value for shishu nights theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_SHISHUNIGHTS = 7;
 
         /**
          * Whether to enable status and navigation bar color in battery saver mode.
