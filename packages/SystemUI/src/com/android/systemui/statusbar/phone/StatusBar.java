@@ -600,6 +600,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     private BatteryController mBatteryController;
     protected boolean mPanelExpanded;
     private IOverlayManager mOverlayManager;
+    private int mCurrentTheme;
     private boolean mKeyguardRequested;
     private boolean mIsKeyguard;
     private LogMaker mStatusBarStateLog;
@@ -822,6 +823,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         final Context context = mContext;
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
+        getCurrentThemeSetting();
         updateTheme(themeNeedsRefresh());
 
         inflateStatusBarWindow(context);
@@ -2179,6 +2181,22 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Check for the dark system theme
     public boolean isUsingDarkTheme() {
         return ThemeAccentUtils.isUsingDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public boolean isUsingBlackTheme() {
+        return ThemeAccentUtils.isUsingBlackTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public boolean isUsingExtendedTheme() {
+        return ThemeAccentUtils.isUsingExtendedTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public boolean isUsingChocolateTheme() {
+        return ThemeAccentUtils.isUsingChocolateTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    public boolean isUsingElegantTheme() {
+        return ThemeAccentUtils.isUsingElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
     // Unloads the stock dark theme
@@ -4024,6 +4042,10 @@ public class StatusBar extends SystemUI implements DemoMode,
         return true;
     }
 
+    private void getCurrentThemeSetting() {
+        mCurrentTheme = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.SYSTEM_THEME_STYLE, 0, mLockscreenUserManager.getCurrentUserId());
+    }
 
     /**
      * Switches theme from light to dark and vice-versa.
@@ -4031,22 +4053,73 @@ public class StatusBar extends SystemUI implements DemoMode,
     protected void updateTheme(boolean themeNeedsRefresh) {
         final boolean inflated = mStackScroller != null && mStatusBarWindowManager != null;
 
-        // The system wallpaper defines if QS should be light or dark.
-        WallpaperColors systemColors = mColorExtractor
-                .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
-        final boolean wallpaperWantsDarkTheme = systemColors != null
-                && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
-        final Configuration config = mContext.getResources().getConfiguration();
-        final boolean nightModeWantsDarkTheme = DARK_THEME_IN_NIGHT_MODE
-                && (config.uiMode & Configuration.UI_MODE_NIGHT_MASK)
-                    == Configuration.UI_MODE_NIGHT_YES;
-        final boolean useDarkTheme = nightModeWantsDarkTheme;
+        boolean useElegantTheme = false;
+        boolean useChocolateTheme = false;
+        boolean useExtendedTheme = false;
+        boolean useBlackTheme = false;
+        boolean useDarkTheme = false;
+        if (mCurrentTheme == 0) {
+           // The system wallpaper defines if QS should be light or dark.
+            WallpaperColors systemColors = mColorExtractor
+                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            final boolean wallpaperWantsDarkTheme = systemColors != null
+                    && (systemColors.getColorHints() & WallpaperColors.HINT_SUPPORTS_DARK_THEME) != 0;
+            final Configuration config = mContext.getResources().getConfiguration();
+            final boolean nightModeWantsDarkTheme = DARK_THEME_IN_NIGHT_MODE
+                    && (config.uiMode & Configuration.UI_MODE_NIGHT_MASK)
+                        == Configuration.UI_MODE_NIGHT_YES;
+            useDarkTheme = wallpaperWantsDarkTheme || nightModeWantsDarkTheme;
+        } else {
+            useDarkTheme = mCurrentTheme == 2;
+            useBlackTheme = mCurrentTheme == 3;
+            useExtendedTheme = mCurrentTheme == 4;
+            useChocolateTheme = mCurrentTheme == 5;
+            useElegantTheme = mCurrentTheme == 6;
+        }
+
         if (themeNeedsRefresh || isUsingDarkTheme() != useDarkTheme) {
+            final boolean useDark = useDarkTheme;
             mUiOffloadThread.submit(() -> {
-                unfuckBlackWhiteAccent();
-                ThemeAccentUtils.setLightDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useDarkTheme);
-                mNotificationPanel.setLockscreenClockTheme(useDarkTheme);
+            unfuckBlackWhiteAccent();
+            ThemeAccentUtils.setLightDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useDarkTheme);
             });
+            mNotificationPanel.setLockscreenClockTheme(useDarkTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingBlackTheme() != useBlackTheme) {
+            final boolean useBlack = useBlackTheme;
+            mUiOffloadThread.submit(() -> {
+            unfuckBlackWhiteAccent();
+            ThemeAccentUtils.setLightBlackTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useBlack);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useBlackTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingExtendedTheme() != useExtendedTheme) {
+            final boolean useExtended = useExtendedTheme;
+            mUiOffloadThread.submit(() -> {
+            unfuckBlackWhiteAccent();
+            ThemeAccentUtils.setLightExtendedTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useExtended);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useExtendedTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingChocolateTheme() != useChocolateTheme) {
+            final boolean useChocolate = useChocolateTheme;
+            mUiOffloadThread.submit(() -> {
+            unfuckBlackWhiteAccent();
+            ThemeAccentUtils.setLightChocolateTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useChocolate);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useChocolateTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingElegantTheme() != useElegantTheme) {
+            final boolean useElegant = useElegantTheme;
+            mUiOffloadThread.submit(() -> {
+            unfuckBlackWhiteAccent();
+            ThemeAccentUtils.setLightElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useElegant);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useElegantTheme);
         }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
@@ -5295,6 +5368,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.ACCENT_PICKER),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_THEME_STYLE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_TILE_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
@@ -5351,6 +5427,10 @@ public class StatusBar extends SystemUI implements DemoMode,
                 unloadAccents();
                 updateAccents();
             } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.SYSTEM_THEME_STYLE))) {
+                getCurrentThemeSetting();
+                updateTheme(false);
+            } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.QS_TILE_STYLE))) {
                 unlockQsTileStyles();
                 updateTileStyle();
@@ -5390,6 +5470,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             setFpToDismissNotifications();
             setLockscreenMediaMetadata();
             updateQsPanelResources();
+            updateTheme(false);
             setStatusBarWindowViewOptions();
             setForceAmbient();
             updateKeyguardStatusSettings();

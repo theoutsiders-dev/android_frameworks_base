@@ -4497,6 +4497,60 @@ public final class Settings {
         public static final String ACCENT_PICKER = "accent_picker";
 
         /**
+         * 0 - wallpaper based
+         * 1 - force light
+         * 2 - force dark
+         * 3 - force black
+         * 4 - force extendedUI
+         * 5 - force chocolateUI
+         * 6 - force Elegant UI
+         * @hide
+         */
+        public static final String SYSTEM_THEME_STYLE = "system_theme_style";
+
+        /**
+         * SYSTEM_THEME_STYLE value for wallpaper mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_WALLPAPER = 0;
+
+        /**
+         * SYSTEM_THEME_STYLE value for light theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_LIGHT = 1;
+
+        /**
+         * SYSTEM_THEME_STYLE value for dark theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_DARK = 2;
+
+        /**
+         * SYSTEM_THEME_STYLE value for black theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_BLACK = 3;
+
+        /**
+         * SYSTEM_THEME_STYLE value for extended theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_EXTENDED = 4;
+
+        /**
+         * SYSTEM_THEME_STYLE value for chocolate theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_CHOCOLATE = 5;
+
+        /**
+         * SYSTEM_THEME_STYLE value for elegant theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_ELEGANT = 6;
+
+        /**
          * Double tap on lockscreen to sleep
          * @hide
          */
@@ -5017,6 +5071,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(KEY_APP_SWITCH_DOUBLE_TAP_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_LONG_PRESS_ACTION);
             PRIVATE_SETTINGS.add(KEY_CAMERA_DOUBLE_TAP_ACTION);
+            PRIVATE_SETTINGS.add(SYSTEM_THEME_STYLE);
             PRIVATE_SETTINGS.add(STATUS_BAR_LOGO);
             PRIVATE_SETTINGS.add(FACE_AUTO_UNLOCK);
             PRIVATE_SETTINGS.add(CUSTOM_BUTTON_BRIGHTNESS);
