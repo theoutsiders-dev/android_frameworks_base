@@ -35,9 +35,6 @@ public class ThemeAccentUtils {
         "DisplayCutoutEmulationWide",
     };
 
-    // Stock dark theme package
-    private static final String STOCK_DARK_THEME = "com.android.systemui.theme.dark";
-
     // Accents
     private static final String[] ACCENTS = {
         "default_accent", // 0
@@ -69,6 +66,38 @@ public class ThemeAccentUtils {
         "com.accents.userfive", // 26
         "com.accents.usersix", // 27
         "com.accents.userseven", // 28
+	"com.potato.overlay.accent.armygreen", // 29
+	"com.potato.overlay.accent.deepred", // 30
+	"com.potato.overlay.accent.fadedpink", // 31
+	"com.potato.overlay.accent.kindaindigo", // 32
+	"com.potato.overlay.accent.pinkred", // 33
+	"org.evolutionx.overlay.accent.aospa", // 34
+	"org.evolutionx.overlay.accent.androidone", // 35
+	"org.evolutionx.overlay.accent.cocacola", // 36
+        "org.evolutionx.overlay.accent.discord", // 37
+	"org.evolutionx.overlay.accent.facebook", // 38
+	"org.evolutionx.overlay.accent.instagram", // 39
+	"org.evolutionx.overlay.accent.jollibee", // 40
+     	"org.evolutionx.overlay.accent.monster", // 41
+	"org.evolutionx.overlay.accent.nextbit", // 42
+	"org.evolutionx.overlay.accent.oneplus", // 43
+	"org.evolutionx.overlay.accent.pepsi", // 44
+	"org.evolutionx.overlay.accent.poco", // 45
+	"org.evolutionx.overlay.accent.razer", // 46
+	"org.evolutionx.overlay.accent.samsung", // 47
+	"org.evolutionx.overlay.accent.spotify", // 48
+	"org.evolutionx.overlay.accent.starbucks", // 49
+	"org.evolutionx.overlay.accent.twitch", // 50
+     	"org.evolutionx.overlay.accent.twitter", // 51
+      	"org.evolutionx.overlay.accent.xbox", // 52
+      	"org.evolutionx.overlay.accent.xiaomi", // 53
+        "com.accents.nblue", // 54
+        "com.accents.nbrown", // 55
+        "com.accents.ngreen", // 56
+        "com.accents.norange", // 57
+        "com.accents.npink", // 58
+        "com.accents.npurple", // 59
+        "com.accents.nred", // 60
     };
 
     private static final String[] DARK_THEMES = {
