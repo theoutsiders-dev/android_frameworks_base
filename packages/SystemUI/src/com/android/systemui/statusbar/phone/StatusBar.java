@@ -2370,11 +2370,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         return ThemeAccentUtils.isUsingShishuNightsTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
-    // Unloads the stock dark theme
-    public void unloadStockDarkTheme() {
-        ThemeAccentUtils.unloadStockDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
-    }
-
     // Check for black and white accent overlays
     public void unfuckBlackWhiteAccent() {
         ThemeAccentUtils.unfuckBlackWhiteAccent(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
@@ -4465,7 +4460,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             final boolean useDark = useDarkTheme;
             mUiOffloadThread.submit(() -> {
             unfuckBlackWhiteAccent();
-            ThemeAccentUtils.setLightDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useDarkTheme);
+            ThemeAccentUtils.setLightDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useDark);
             });
             mNotificationPanel.setLockscreenClockTheme(useDarkTheme);
         }
