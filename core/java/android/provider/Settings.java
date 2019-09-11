@@ -4637,6 +4637,12 @@ public final class Settings {
         public static final String ACCENT_PICKER = "accent_picker";
 
         /**
+         * Select various themes colors
+         * @hide
+         */
+        public static final String THEME_PICKER = "theme_picker";
+
+        /**
 	 ** Change fonts for the system lockscreen clock widget
 	 **
 	 ** @hide
@@ -4678,7 +4684,8 @@ public final class Settings {
          * 4 - force extendedUI
          * 5 - force chocolateUI
          * 6 - force Elegant UI
-         * 6 - force Shishu Nights
+         * 7 - force Shady UI
+         * 8 - force Glassy UI
          * @hide
          */
         public static final String SYSTEM_THEME_STYLE = "system_theme_style";
@@ -4726,10 +4733,16 @@ public final class Settings {
         public static final int SYSTEM_THEME_STYLE_ELEGANT = 6;
 
         /**
-         * SYSTEM_THEME_STYLE value for shishu nights theme mode.
+         * SYSTEM_THEME_STYLE value for shady theme mode.
          * @hide
          */
-        public static final int SYSTEM_THEME_STYLE_SHISHUNIGHTS = 7;
+        public static final int SYSTEM_THEME_STYLE_SHADY = 7;
+
+        /**
+         * SYSTEM_THEME_STYLE value for glassy theme mode.
+         * @hide
+         */
+        public static final int SYSTEM_THEME_STYLE_GLASSY = 8;
 
         /**
          * Whether to enable status and navigation bar color in battery saver mode.

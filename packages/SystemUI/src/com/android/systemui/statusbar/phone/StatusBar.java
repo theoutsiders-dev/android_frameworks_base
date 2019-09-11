@@ -2366,8 +2366,14 @@ public class StatusBar extends SystemUI implements DemoMode,
         return ThemeAccentUtils.isUsingElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
-    public boolean isUsingShishuNightsTheme() {
-        return ThemeAccentUtils.isUsingShishuNightsTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    // Check for the shady system theme
+    public boolean isUsingShadyTheme() {
+        return ThemeAccentUtils.isUsingShadyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    // Check for the glassy system theme
+    public boolean isUsingGlassyTheme() {
+        return ThemeAccentUtils.isUsingGlassyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
     // Check for black and white accent overlays
@@ -4435,7 +4441,8 @@ public class StatusBar extends SystemUI implements DemoMode,
         boolean useExtendedTheme = false;
         boolean useBlackTheme = false;
         boolean useDarkTheme = false;
-        boolean useShishuNightsTheme = false;
+        boolean useShadyTheme = false;
+        boolean useGlassyTheme = false;
         if (mCurrentTheme == 0) {
            // The system wallpaper defines if QS should be light or dark.
             WallpaperColors systemColors = mColorExtractor
@@ -4453,7 +4460,8 @@ public class StatusBar extends SystemUI implements DemoMode,
             useExtendedTheme = mCurrentTheme == 4;
             useChocolateTheme = mCurrentTheme == 5;
             useElegantTheme = mCurrentTheme == 6;
-            useShishuNightsTheme = mCurrentTheme == 7;
+            useShadyTheme = mCurrentTheme == 7;
+            useGlassyTheme = mCurrentTheme == 8;
         }
 
         if (themeNeedsRefresh || isUsingDarkTheme() != useDarkTheme) {
@@ -4501,12 +4509,24 @@ public class StatusBar extends SystemUI implements DemoMode,
             mNotificationPanel.setLockscreenClockTheme(useElegantTheme);
         }
 
-        if (themeNeedsRefresh || isUsingShishuNightsTheme() != useShishuNightsTheme) {
-            final boolean useShishuNight = useShishuNightsTheme;
+        if (themeNeedsRefresh || isUsingShadyTheme() != useShadyTheme) {
+            final boolean useShady = useShadyTheme;
+            unfuckBlackWhiteAccent();
             mUiOffloadThread.submit(() -> {
-            ThemeAccentUtils.setLightShishuNightsTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useShishuNight);
+            ThemeAccentUtils.setShadyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useShady);
             });
-            mNotificationPanel.setLockscreenClockTheme(useShishuNightsTheme);
+            mNotificationPanel.setLockscreenClockTheme(useShadyTheme);
+        }
+
+        if (themeNeedsRefresh || isUsingGlassyTheme() != useGlassyTheme) {
+            final boolean useGlassy = useGlassyTheme;
+            // Check for black and white accent so we don't end up
+            // with white on white or black on black
+            unfuckBlackWhiteAccent();
+            mUiOffloadThread.submit(() -> {
+            ThemeAccentUtils.setGlassyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useGlassy);
+            });
+            mNotificationPanel.setLockscreenClockTheme(useGlassyTheme);
         }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it
@@ -4605,6 +4625,18 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all qs header styles back to stock
     public void stockQSHeaderStyle() {
         ThemeAccentUtils.stockQSHeaderStyle(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    // Switches theme from to another or back to stock
+    public void updateThemes() {
+        int themeSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.THEME_PICKER, 0, mLockscreenUserManager.getCurrentUserId());
+        ThemeAccentUtils.updateThemes(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), themeSetting);
+    }
+
+    // Unload all the themes
+    public void unloadThemes() {
+        ThemeAccentUtils.unloadThemes(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
     }
 
     private void updateDozingState() {
@@ -5868,6 +5900,9 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.ACCENT_PICKER),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.THEME_PICKER),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.SYSTEM_THEME_STYLE),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -5977,6 +6012,12 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.ACCENT_PICKER))) {
                 unloadAccents();
                 updateAccents();
+            } else if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.THEME_PICKER))) {
+                // Unload the themes and update the theme only when the user asks.
+                // Keeps us from overloading the system by performing these tasks every time.
+                unloadThemes();
+                updateThemes();
             } else if (uri.equals(Settings.System.getUriFor(
                     Settings.System.SYSTEM_THEME_STYLE))) {
                 getCurrentThemeSetting();
