@@ -2,12 +2,15 @@ package com.android.keyguard.clocks;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
 import android.content.res.Resources;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.os.UserHandle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.Annotation;
 import android.text.SpannableString;
@@ -34,6 +37,9 @@ public class TypographicClock extends TextView {
     private final Resources mResources;
     private final Calendar mTime;
     private TimeZone mTimeZone;
+
+    private int mClockColor = 0xffffffff;
+    private SettingsObserver mSettingsObserver;
 
     private final BroadcastReceiver mTimeZoneChangedReceiver = new BroadcastReceiver() {
         @Override
@@ -116,6 +122,12 @@ public class TypographicClock extends TextView {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
         getContext().registerReceiver(mTimeZoneChangedReceiver, filter);
+
+        if (mSettingsObserver == null) {
+            mSettingsObserver = new SettingsObserver(new Handler());
+        }
+        mSettingsObserver.observe();
+        updateClockColor();
     }
 
     @Override
@@ -127,6 +139,7 @@ public class TypographicClock extends TextView {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        setTextColor(mClockColor);
         refreshLockFont();
     }
 
@@ -314,5 +327,32 @@ public class TypographicClock extends TextView {
         if (lockClockFont == 57) {
              setTypeface(Typeface.create("voltaire", Typeface.NORMAL));
 	}
+    }
+
+    private void updateClockColor() {
+        mClockColor = Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.LOCKSCREEN_CLOCK_COLOR, 0xFFFFFFFF,
+                UserHandle.USER_CURRENT);
+            setTextColor(mClockColor);
+            onTimeChanged();
+    }
+
+    protected class SettingsObserver extends ContentObserver {
+        SettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.LOCKSCREEN_CLOCK_COLOR),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+	    updateClockColor();
+        }
     }
 }
