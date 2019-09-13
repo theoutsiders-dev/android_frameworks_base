@@ -4556,6 +4556,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             mStatusBarWindowManager.setKeyguardDark(useDarkText);
         }
         updateCorners();
+        updateQSPanel();
     }
 
     private void updateCorners() {
@@ -4637,6 +4638,24 @@ public class StatusBar extends SystemUI implements DemoMode,
     // Unload all the themes
     public void unloadThemes() {
         ThemeAccentUtils.unloadThemes(mOverlayManager, mLockscreenUserManager.getCurrentUserId());
+    }
+
+    private void updateQSPanel() {
+        int userQsWallColorSetting = Settings.System.getIntForUser(mContext.getContentResolver(),
+                    Settings.System.QS_PANEL_BG_USE_WALL, 0, UserHandle.USER_CURRENT);
+        boolean setQsFromWall = userQsWallColorSetting == 1;
+        if (setQsFromWall) {
+            WallpaperColors systemColors = mColorExtractor
+                    .getWallpaperColors(WallpaperManager.FLAG_SYSTEM);
+            if (systemColors != null)
+            {
+                Color mColor = systemColors.getPrimaryColor();
+                int mColorInt = mColor.toArgb();
+                Settings.System.putIntForUser(mContext.getContentResolver(),
+                        Settings.System.QS_PANEL_BG_COLOR_WALL, mColorInt, UserHandle.USER_CURRENT);
+            }
+
+        }
     }
 
     private void updateDozingState() {
@@ -6004,6 +6023,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STOCK_STATUSBAR_IN_HIDE),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.QS_PANEL_BG_USE_WALL),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -6091,6 +6113,8 @@ public class StatusBar extends SystemUI implements DemoMode,
              } else if (uri.equals(Settings.System.getUriFor(Settings.System.DISPLAY_CUTOUT_MODE)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.STOCK_STATUSBAR_IN_HIDE))) {
                 handleCutout(null);
+            } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_WALL))) {
+                updateQSPanel();
             }
         }
 
