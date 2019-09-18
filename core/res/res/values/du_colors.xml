@@ -81,4 +81,6 @@
     <!-- Custom accent color -->
     <color name="custom_accent_color">@color/accent_device_default_light</color>
 
+    <!-- QS Accent -->
+    <color name="qs_accent">@color/accent_device_default_light</color>
 </resources>
