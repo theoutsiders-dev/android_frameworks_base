@@ -5977,6 +5977,18 @@ public final class Settings {
         public static final String AUTO_ANSWER_CALL_KEY = "auto_answer_call_key";
 
         /**
+         * Which component to use for Recents UI
+         * 0 - Pie Recents (Quickstep)
+         * 1 - Oreo Recents (SystemUI)
+         * @hide
+         */
+        public static final String RECENTS_COMPONENT = "recents_component";
+
+        /** @hide */
+        public static final Validator RECENTS_COMPONENT_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 1);
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6081,7 +6093,8 @@ public final class Settings {
             DISPLAY_AUTO_CONTRAST,
             DISPLAY_COLOR_ADJUSTMENT,
             DISPLAY_PICTURE_ADJUSTMENT,
-            LIVE_DISPLAY_HINTED
+            LIVE_DISPLAY_HINTED,
+            RECENTS_COMPONENT
         };
 
         /**
@@ -6271,6 +6284,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER);
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_DELAY);
             PRIVATE_SETTINGS.add(PROXIMITY_AUTO_SPEAKER_INCALL_ONLY);
+            PRIVATE_SETTINGS.add(RECENTS_COMPONENT);
         }
 
         /**
@@ -6418,6 +6432,7 @@ public final class Settings {
             VALIDATORS.put(DISPLAY_COLOR_ADJUSTMENT, DISPLAY_COLOR_ADJUSTMENT_VALIDATOR);
             VALIDATORS.put(DISPLAY_PICTURE_ADJUSTMENT, DISPLAY_PICTURE_ADJUSTMENT_VALIDATOR);
             VALIDATORS.put(LIVE_DISPLAY_HINTED, LIVE_DISPLAY_HINTED_VALIDATOR);
+            VALIDATORS.put(RECENTS_COMPONENT,RECENTS_COMPONENT_VALIDATOR);
         }
 
         /**
