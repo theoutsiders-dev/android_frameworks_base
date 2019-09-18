@@ -146,6 +146,8 @@ public class ThemeAccentUtils {
         "com.android.contacts.theme.dark", //4
         "com.android.documentsui.theme.dark", //5
         "com.google.android.apps.wellbeing.theme.dark", //6
+        "com.android.settings.intelligence.theme.dark", // 7
+        "com.google.intelligence.sense.theme.dark", // 8
     };
 
     private static final String[] BLACK_THEMES = {
@@ -156,6 +158,8 @@ public class ThemeAccentUtils {
         "com.android.contacts.theme.black", //4
         "com.android.documentsui.theme.black", //5
         "com.google.android.apps.wellbeing.theme.black", //6
+        "com.android.settings.intelligence.theme.black", // 7
+        "com.google.intelligence.sense.theme.black", // 8
     };
 
     private static final String[] EXTENDED_THEMES = {
@@ -166,6 +170,7 @@ public class ThemeAccentUtils {
         "com.android.contacts.theme.extended", //4
         "com.android.documentsui.theme.extended", //5
         "com.google.android.apps.wellbeing.theme.extended", //6
+        "com.android.settings.intelligence.theme.extended", // 7
     };
 
     private static final String[] CHOCOLATE_THEMES = {
@@ -176,6 +181,7 @@ public class ThemeAccentUtils {
         "com.android.contacts.theme.chocolate", //4
         "com.android.documentsui.theme.chocolate", //5
         "com.google.android.apps.wellbeing.theme.chocolate", //6
+        "com.android.settings.intelligence.theme.chocolate", // 7
     };
 
     private static final String[] ELEGANT_THEMES = {
@@ -187,6 +193,7 @@ public class ThemeAccentUtils {
         "com.android.documentsui.theme.elegant", //6
         "com.google.android.apps.wellbeing.theme.elegant", //7
 	"com.google.android.apps.gms.theme.elegant", //8
+        "com.android.settings.intelligence.theme.elegant", // 9
     };
 
     // Shady themes
