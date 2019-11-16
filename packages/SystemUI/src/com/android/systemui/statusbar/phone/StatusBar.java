@@ -4470,7 +4470,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightDarkTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useDark);
             });
-            mNotificationPanel.setLockscreenClockTheme(useDarkTheme);
         }
 
         if (themeNeedsRefresh || isUsingBlackTheme() != useBlackTheme) {
@@ -4479,7 +4478,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightBlackTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useBlack);
             });
-            mNotificationPanel.setLockscreenClockTheme(useBlackTheme);
         }
 
         if (themeNeedsRefresh || isUsingExtendedTheme() != useExtendedTheme) {
@@ -4488,7 +4486,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightExtendedTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useExtended);
             });
-            mNotificationPanel.setLockscreenClockTheme(useExtendedTheme);
         }
 
         if (themeNeedsRefresh || isUsingChocolateTheme() != useChocolateTheme) {
@@ -4497,7 +4494,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightChocolateTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useChocolate);
             });
-            mNotificationPanel.setLockscreenClockTheme(useChocolateTheme);
         }
 
         if (themeNeedsRefresh || isUsingElegantTheme() != useElegantTheme) {
@@ -4506,7 +4502,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             unfuckBlackWhiteAccent();
             ThemeAccentUtils.setLightElegantTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useElegant);
             });
-            mNotificationPanel.setLockscreenClockTheme(useElegantTheme);
         }
 
         if (themeNeedsRefresh || isUsingShadyTheme() != useShadyTheme) {
@@ -4515,7 +4510,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mUiOffloadThread.submit(() -> {
             ThemeAccentUtils.setShadyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useShady);
             });
-            mNotificationPanel.setLockscreenClockTheme(useShadyTheme);
         }
 
         if (themeNeedsRefresh || isUsingGlassyTheme() != useGlassyTheme) {
@@ -4526,7 +4520,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mUiOffloadThread.submit(() -> {
             ThemeAccentUtils.setGlassyTheme(mOverlayManager, mLockscreenUserManager.getCurrentUserId(), useGlassy);
             });
-            mNotificationPanel.setLockscreenClockTheme(useGlassyTheme);
         }
 
         // Lock wallpaper defines the color of the majority of the views, hence we'll use it

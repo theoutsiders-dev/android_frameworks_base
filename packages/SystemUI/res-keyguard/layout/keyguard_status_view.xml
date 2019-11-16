@@ -79,8 +79,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 app:custom_dial="@drawable/custom_clock_dial"
-                app:custom_dial_dark="@drawable/custom_clock_dial_dark"
-                app:custom_dial_buttons="@drawable/custom_dial_buttons"
                 app:custom_hand_hour="@drawable/custom_clock_hand_hour"
                 app:custom_hand_minute="@drawable/custom_clock_hand_minute"
                 app:custom_clock_dial_ambient="@drawable/custom_clock_dial_ambient"/>
@@ -92,8 +90,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_alignParentTop="true"
                 app:custom_dial="@drawable/du_clock_dial"
-                app:custom_dial_dark="@drawable/du_clock_dial_dark"
-                app:custom_dial_buttons="@drawable/du_dial_buttons"
                 app:custom_hand_hour="@drawable/du_clock_hand_hour"
                 app:custom_hand_minute="@drawable/du_clock_hand_minute"
                 app:custom_clock_dial_ambient="@drawable/du_clock_dial_ambient"/>
