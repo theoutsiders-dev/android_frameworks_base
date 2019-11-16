@@ -566,13 +566,14 @@ public class KeyguardStatusView extends GridLayout implements
     private void updateVisibilities() {
         mClockView.setVisibility(View.GONE);
         mCustomClockView.setVisibility(View.GONE);
-	mDuClockView.setVisibility(View.GONE);
+        mDuClockView.setVisibility(View.GONE);
         mTextClock.setVisibility(View.GONE);
         final int mClockVisibility = mDarkAmount != 1 ? (mShowClock ? View.VISIBLE :
                        View.GONE) : View.VISIBLE;
         switch (mClockSelection) {
             case 2: // custom analog
                 mCustomClockView.setVisibility(mClockVisibility);
+                break;
             case 3: // du analog
                 mDuClockView.setVisibility(mClockVisibility);
                 break;
