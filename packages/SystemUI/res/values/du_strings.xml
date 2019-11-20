@@ -243,4 +243,9 @@
     <string name="use_data">Use %s for data</string>
 
     <string name="recents_free_ram">Free RAM: %1$d MB</string>
+
+    <!-- SysUI Tuner -->
+    <string name="statusbar_icons_blacklist">Status bar icons</string>
+    <string name="lockscreen_tuner_activity">Lock screen shortcuts</string>
+    <string name="powernotif_tuner_activity">Power notifications</string>
 </resources>
