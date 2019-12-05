@@ -169,6 +169,10 @@ public class Utils {
         FireActions.toggleCameraFlash();
     }
 
+    public static void setPartialScreenshot(boolean active) {
+        FireActions.setPartialScreenshot(active);
+    }
+
     private static final class FireActions {
         private static IStatusBarService mStatusBarService = null;
 
@@ -190,6 +194,15 @@ public class Utils {
                 } catch (RemoteException e) {
                     // do nothing.
                 }
+            }
+        }
+
+    public static void setPartialScreenshot(boolean active) {
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.setPartialScreenshot(active);
+                } catch (RemoteException e) {}
             }
         }
     }
