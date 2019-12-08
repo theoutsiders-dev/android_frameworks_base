@@ -4650,9 +4650,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 	    resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.Secure.SYSUI_ROUNDED_FWVALS),
                     false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.Secure.getUriFor(
-                    Settings.Secure.HIDE_BACK_ARROW_GESTURE),
-                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4674,9 +4671,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 setFpToDismissNotifications();
             } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.SYSUI_ROUNDED_FWVALS))) {
                 updateCorners();
-            } else if (uri.equals(Settings.Secure.getUriFor(
-                    Settings.Secure.HIDE_BACK_ARROW_GESTURE))) {
-                setHideArrowForBackGesture();
         }
     }
 
@@ -4691,7 +4685,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             setPulseOnNewTracks();
             setFpToDismissNotifications();
             updateCorners();
-            setHideArrowForBackGesture();
         }
     }
 
@@ -4743,11 +4736,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             mPresenter.setHeadsUpBlacklist();
     }
 
-    private void setHideArrowForBackGesture() {
-        if (getNavigationBarView() != null) {
-            getNavigationBarView().updateBackArrowForGesture();
-        }
-    }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
         @Override
