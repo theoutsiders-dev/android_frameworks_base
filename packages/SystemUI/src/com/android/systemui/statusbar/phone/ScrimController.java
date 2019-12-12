@@ -666,9 +666,9 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                scrim.setTag(TAG_KEY_ANIM, null);
                 onFinished(lastCallback);
 
-                scrim.setTag(TAG_KEY_ANIM, null);
                 dispatchScrimsVisible();
 
                 if (!mDeferFinishedListener && mOnAnimationFinished != null) {
@@ -804,10 +804,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
             } else {
                 // update the alpha directly
                 updateScrimColor(scrim, alpha, getCurrentScrimTint(scrim));
-                onFinished();
             }
-        } else {
-            onFinished();
         }
     }
 
