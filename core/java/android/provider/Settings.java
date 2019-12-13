@@ -5627,6 +5627,13 @@ public final class Settings {
         private static final Validator ASPECT_RATIO_APPS_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * Ambient Display Visualizer
+         *
+         * @hide
+         */
+        public static final String AMBIENT_VISUALIZER_ENABLED = "ambient_visualizer";
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
