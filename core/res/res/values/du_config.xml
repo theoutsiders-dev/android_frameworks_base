@@ -201,4 +201,7 @@
     <!-- True if the notification's dynamic app icon and text tint should be optimised for dark
          backgrounds -->
     <bool name="config_useDarkBgNotificationIconTextTinting">false</bool>
+
+    <!-- Soli -->
+    <bool name="config_has_Soli">false</bool>
 </resources>
