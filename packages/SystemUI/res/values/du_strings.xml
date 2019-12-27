@@ -21,7 +21,7 @@
     <string name="screenrecord_stopdot_label">Show stop dot</string>
     <string name="screenrecord_low_quality_label">Low quality</string>
     <string name="global_action_screenshot_cust">Screenshot</string>
-    <string name="global_action_screenrecord">Screenrecord</string>
+    <string name="global_action_screenrecord">Screen record</string>
 
     <!-- Power menu -->
     <string name="global_action_restart_advanced">Advanced</string>
