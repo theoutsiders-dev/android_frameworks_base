@@ -5649,13 +5649,6 @@ public final class Settings {
         private static final Validator ASPECT_RATIO_APPS_ENABLED_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
-         * Ambient Display Visualizer
-         *
-         * @hide
-         */
-        public static final String AMBIENT_VISUALIZER_ENABLED = "ambient_visualizer";
-
-        /**
          * User definable value of pulse notification screen brightness
          *
          * @hide

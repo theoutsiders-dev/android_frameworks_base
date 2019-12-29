@@ -206,9 +206,9 @@ public class VisualizerView extends View
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mSettingObserver = new SettingsObserver(new Handler());
-        mSettingObserver.observe();
-        mSettingObserver.update();
+        mObserver = new SettingsObserver(new Handler());
+        mObserver.observe();
+        mObserver.update();
     }
 
     @Override
@@ -342,11 +342,6 @@ public class VisualizerView extends View
                 Settings.Secure.LOCKSCREEN_SOLID_UNITS_OPACITY, 140, UserHandle.USER_CURRENT);
     }
 
-    private void setAmbientVisualizerEnabled() {
-        mAmbientVisualizerEnabled = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.AMBIENT_VISUALIZER_ENABLED, 0) == 1;
-    }
-
     public void setVisible(boolean visible) {
         if (DEBUG) {
             Log.i(TAG, "setVisible() called with visible = [" + visible + "]");
@@ -458,23 +453,9 @@ public class VisualizerView extends View
     }
 
     private void checkStateChanged() {
-        if (getVisibility() == View.VISIBLE && mVisible && mPlaying && mDozing
-                && mAmbientVisualizerEnabled && !mPowerSaveMode && mVisualizerEnabled
-                && !mOccluded) {
-            if (!mDisplaying) {
-                mDisplaying = true;
-                AsyncTask.execute(mLinkVisualizer);
-                animate()
-                        .alpha(0.40f)
-                        .setDuration(800);
-            } else {
-                mPaint.setColor(mColor);
-                animate()
-                        .alpha(0.40f)
-                        .setDuration(800);
-            }
-        } else if (getVisibility() == View.VISIBLE && mVisible && mPlaying
-                && !mDozing && !mPowerSaveMode && mVisualizerEnabled && !mOccluded) {
+        boolean isVisible = getVisibility() == View.VISIBLE;
+        if (isVisible && mPlaying && !mDozing && !mPowerSaveMode
+                && mVisualizerEnabled && !mOccluded) {
             if (!mDisplaying) {
                 mDisplaying = true;
                 AsyncTask.execute(mLinkVisualizer);
@@ -482,17 +463,12 @@ public class VisualizerView extends View
                         .alpha(1f)
                         .setDuration(800);
                 if (mLavaLampEnabled) mLavaLamp.start();
-            } else {
-                mPaint.setColor(mColor);
-                animate()
-                        .alpha(1f)
-                        .setDuration(800);
             }
         } else {
             if (mDisplaying) {
                 mDisplaying = false;
                 mLavaLamp.stop();
-                if (mVisible && !mAmbientVisualizerEnabled) {
+                if (isVisible) {
                     animate()
                             .alpha(0f)
                             .withEndAction(mAsyncUnlinkVisualizer)
@@ -507,12 +483,12 @@ public class VisualizerView extends View
         }
     }
 
-    private final class SettingsObserver extends ContentObserver {
+    private class SettingsObserver extends ContentObserver {
         public SettingsObserver(Handler handler) {
             super(handler);
         }
 
-        void observe() {
+        protected void observe() {
             ContentResolver resolver = mContext.getContentResolver();
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_VISUALIZER_ENABLED),
@@ -534,9 +510,6 @@ public class VisualizerView extends View
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_SOLID_UNITS_OPACITY),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.AMBIENT_VISUALIZER_ENABLED),
                     false, this, UserHandle.USER_ALL);
             update();
         }
@@ -569,16 +542,10 @@ public class VisualizerView extends View
             } else if (uri.equals(Settings.Secure.getUriFor(
                     Settings.Secure.LOCKSCREEN_SOLID_UNITS_OPACITY))) {
                 setSolidUnitsOpacity();
-            } else if (uri.equals(Settings.System.getUriFor(
-                    Settings.System.AMBIENT_VISUALIZER_ENABLED))) {
-                setAmbientVisualizerEnabled();
-                checkStateChanged();
-                updateViewVisibility();
             }
         }
 
         protected void update() {
-            setAmbientVisualizerEnabled();
             setVisualizerEnabled();
             setLavaLampEnabled();
             setLavaLampSpeed();
