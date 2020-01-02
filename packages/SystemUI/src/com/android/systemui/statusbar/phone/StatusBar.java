@@ -4714,6 +4714,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.DISPLAY_CUTOUT_HIDDEN),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.LOCKSCREEN_CLOCK_SELECTION),
+                    false, this, UserHandle.USER_ALL);
 
         }
 
@@ -4748,6 +4751,8 @@ public class StatusBar extends SystemUI implements DemoMode,
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_COLOR_WALL)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_PANEL_BG_USE_ACCENT))) {
                 mQSPanel.getHost().reloadAllTiles();
+            } else if (uri.equals(Settings.Secure.getUriFor(Settings.Secure.LOCKSCREEN_CLOCK_SELECTION))) {
+                updateKeyguardStatusSettings();
         }
             update();
     }
@@ -4758,6 +4763,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateQSPanel();
             updateCorners();
             updateCutoutOverlay();
+            updateKeyguardStatusSettings();
             setLockscreenDoubleTapToSleep();
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
@@ -4768,6 +4774,10 @@ public class StatusBar extends SystemUI implements DemoMode,
             setHideArrowForBackGesture();
             setAmbientVis();
         }
+    }
+
+    private void updateKeyguardStatusSettings() {
+        mNotificationPanel.updateKeyguardStatusSettings();
     }
 
     private void setFpToDismissNotifications() {
