@@ -5928,6 +5928,16 @@ public final class Settings {
         private static final Validator QS_BLUR_ALPHA_VALIDATOR = ANY_INTEGER_VALIDATOR;
 
         /**
+         * Ability to hide notch
+         * @hide
+         */
+        public static final String HIDE_NOTCH = "hide_notch";
+
+        /** @hide */
+        private static final Validator HIDE_NOTCH_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -6052,7 +6062,8 @@ public final class Settings {
             STATUS_BAR_TICKER_TICK_DURATION, 
             BACK_GESTURE_HAPTIC,
             QS_BLUR,
-            QS_BLUR_ALPHA
+            QS_BLUR_ALPHA,
+            HIDE_NOTCH
         };
 
         /**
@@ -6248,6 +6259,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_ANIMATION_MODE);
             PRIVATE_SETTINGS.add(STATUS_BAR_TICKER_TICK_DURATION);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
+            PRIVATE_SETTINGS.add(HIDE_NOTCH);
         }
 
         /**
@@ -6412,6 +6424,7 @@ public final class Settings {
             VALIDATORS.put(BACK_GESTURE_HAPTIC, BACK_GESTURE_HAPTIC_VALIDATOR);
             VALIDATORS.put(QS_BLUR, QS_BLUR_VALIDATOR);
             VALIDATORS.put(QS_BLUR_ALPHA, QS_BLUR_ALPHA_VALIDATOR);
+            VALIDATORS.put(HIDE_NOTCH, HIDE_NOTCH_VALIDATOR);
         }
 
         /**

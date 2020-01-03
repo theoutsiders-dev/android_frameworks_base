@@ -77,6 +77,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PointF;
 import android.graphics.Rect;
@@ -529,6 +530,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     public ImageView mQSBlurView;
     private boolean blurperformed = false;
+
+    private View mKeyguardStatusBar;
 
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     @VisibleForTesting
@@ -1180,6 +1183,8 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
+        mKeyguardStatusBar = mStatusBarWindow.findViewById(R.id.keyguard_header);
+        updateHideNotchStatus();
     }
 
     public void updateBlurVisibility() {
@@ -2461,6 +2466,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mLightBarController.onSystemUiVisibilityChanged(fullscreenStackVis, dockedStackVis,
                 mask, fullscreenStackBounds, dockedStackBounds, sbModeChanged, mStatusBarMode,
                 navbarColorManagedByIme);
+        updateHideNotchStatus();
     }
 
     @Override
@@ -4911,6 +4917,9 @@ public class StatusBar extends SystemUI implements DemoMode,
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.QS_BLUR_ALPHA),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HIDE_NOTCH),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4952,6 +4961,7 @@ public class StatusBar extends SystemUI implements DemoMode,
             updateKeyguardStatusSettings();
             updateTickerAnimation();
             updateTickerTickDuration();
+            updateHideNotchStatus();
             setLockscreenDoubleTapToSleep();
             setHeadsUpStoplist();
             setHeadsUpBlacklist();
@@ -5028,6 +5038,21 @@ public class StatusBar extends SystemUI implements DemoMode,
         mAmbientVisualizer = Settings.Secure.getIntForUser(
                 mContext.getContentResolver(), Settings.Secure.AMBIENT_VISUALIZER_ENABLED, 0,
                 UserHandle.USER_CURRENT) == 1;
+    }
+
+    public void updateHideNotchStatus() {
+        if (mStatusBarView != null && mKeyguardStatusBar != null && hideNotch()) {
+            mStatusBarView.setBackgroundColor(0xFF000000);
+            mKeyguardStatusBar.setBackgroundColor(0xFF000000);
+        } else if (mStatusBarView != null && mKeyguardStatusBar != null) {
+            mStatusBarView.setBackgroundColor(Color.TRANSPARENT);
+            mKeyguardStatusBar.setBackgroundColor(Color.TRANSPARENT);
+        }
+    }
+
+    private boolean hideNotch() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.HIDE_NOTCH, 0) != 0;
     }
 
     public boolean isNotificationForCurrentProfiles(StatusBarNotification n) {
