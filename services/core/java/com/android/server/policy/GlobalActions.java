@@ -91,12 +91,12 @@ class GlobalActions implements GlobalActionsProvider.GlobalActionsListener {
     public void onGlobalActionsAvailableChanged(boolean available) {
         if (DEBUG) Slog.d(TAG, "onGlobalActionsAvailableChanged " + available);
         mGlobalActionsAvailable = available;
-        if (mShowing && !mGlobalActionsAvailable) {
+        /*if (mShowing && !mGlobalActionsAvailable) {
             // Global actions provider died but we need to be showing global actions still, show the
             // legacy global acrions provider.
-            //ensureLegacyCreated();
-            //mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
-        }
+            ensureLegacyCreated();
+            mLegacyGlobalActions.showDialog(mKeyguardShowing, mDeviceProvisioned);
+        }*/
     }
 
     private final Runnable mShowTimeout = new Runnable() {
