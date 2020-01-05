@@ -5186,10 +5186,6 @@ public final class Settings {
           */
          public static final String VOLUME_DIALOG_TIMEOUT = "volume_dialog_timeout";
 
-         /** @hide */
-         private static final Validator VOLUME_DIALOG_TIMEOUT_VALIDATOR =
-                new SettingsValidators.InclusiveIntegerRangeValidator(500, 10000);;
-
         /**
          * Transparent power menu and dialogs
          * @hide
@@ -5997,7 +5993,6 @@ public final class Settings {
             BATTERY_LIGHT_REALLYFULL_COLOR,
             ANBI_ENABLED_OPTION,
             ALLOW_INCALL_HOME,
-            VOLUME_DIALOG_TIMEOUT,
             TRANSPARENT_POWER_MENU,
             TRANSPARENT_POWER_DIALOG_DIM,
             HEADS_UP_NOTIFICATION_SNOOZE,
@@ -6205,7 +6200,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BATTERY_LIGHT_REALLYFULL_COLOR);
             PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
             PRIVATE_SETTINGS.add(ALLOW_INCALL_HOME);
-            PRIVATE_SETTINGS.add(VOLUME_DIALOG_TIMEOUT);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_MENU);
             PRIVATE_SETTINGS.add(TRANSPARENT_POWER_DIALOG_DIM);
             PRIVATE_SETTINGS.add(HEADS_UP_NOTIFICATION_SNOOZE);
@@ -6369,7 +6363,6 @@ public final class Settings {
             VALIDATORS.put(BATTERY_LIGHT_REALLYFULL_COLOR, BATTERY_LIGHT_REALLYFULL_COLOR_VALIDATOR);
             VALIDATORS.put(ANBI_ENABLED_OPTION, ANBI_ENABLED_OPTION_VALIDATOR);
             VALIDATORS.put(ALLOW_INCALL_HOME, ALLOW_INCALL_HOME_VALIDATOR);
-            VALIDATORS.put(VOLUME_DIALOG_TIMEOUT,VOLUME_DIALOG_TIMEOUT_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_MENU,TRANSPARENT_POWER_MENU_VALIDATOR);
             VALIDATORS.put(TRANSPARENT_POWER_DIALOG_DIM,TRANSPARENT_POWER_DIALOG_DIM_VALIDATOR);
             VALIDATORS.put(HEADS_UP_NOTIFICATION_SNOOZE,HEADS_UP_NOTIFICATION_SNOOZE_VALIDATOR);
