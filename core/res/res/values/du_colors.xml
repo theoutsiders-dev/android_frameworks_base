@@ -21,6 +21,7 @@
     <!-- Power menu -->
     <color name="power_menu_icon_color">#FF494E53</color>
 
+    <!-- Toast -->
     <color name="toast_bg">@color/white</color>
     <color name="toast_text">@color/black</color>
 
@@ -29,4 +30,7 @@
 
     <!-- QS Accent -->
     <color name="qs_accent">@color/accent_device_default_light</color>
+
+    <!-- Themes -->
+    <color name="theme_generic_semi_transparent_color">#EAFFFFFF</color>
 </resources>
