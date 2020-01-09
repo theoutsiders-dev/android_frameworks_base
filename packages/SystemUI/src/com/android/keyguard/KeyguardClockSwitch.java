@@ -58,6 +58,7 @@ import javax.inject.Named;
 public class KeyguardClockSwitch extends RelativeLayout {
 
     private static final String TAG = "KeyguardClockSwitch";
+    private static final boolean CUSTOM_CLOCKS_ENABLED = false;
 
     /**
      * Animation fraction when text is transitioned to/from bold.
@@ -206,7 +207,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        mClockManager.addOnClockChangedListener(mClockChangedListener);
+        if (CUSTOM_CLOCKS_ENABLED) {
+            mClockManager.addOnClockChangedListener(mClockChangedListener);
+        }
         mStatusBarStateController.addCallback(mStateListener);
         mSysuiColorExtractor.addOnColorsChangedListener(mColorsListener);
         updateColors();
@@ -215,7 +218,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        mClockManager.removeOnClockChangedListener(mClockChangedListener);
+        if (CUSTOM_CLOCKS_ENABLED) {
+            mClockManager.removeOnClockChangedListener(mClockChangedListener);
+        }
         mStatusBarStateController.removeCallback(mStateListener);
         mSysuiColorExtractor.removeOnColorsChangedListener(mColorsListener);
         setClockPlugin(null);
