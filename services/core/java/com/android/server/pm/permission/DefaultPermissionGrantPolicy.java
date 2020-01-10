@@ -781,13 +781,6 @@ public final class DefaultPermissionGrantPolicy {
                     MICROPHONE_PERMISSIONS);
         }
 
-        // ThemePicker
-        String themePickerPackage = "com.android.wallpaper";
-        PackageInfo pkg = getPackageInfo(themePickerPackage);
-        if (pkg != null) {
-            grantPermissionsToPackage(themePickerPackage, userId, false /* ignoreSystemPackage */,
-                    true /*whitelistRestrictedPermissions*/, STORAGE_PERMISSIONS);
-        }
         // Google App
         grantSystemFixedPermissionsToSystemPackage("com.google.android.googlequicksearchbox", userId,
                 CALENDAR_PERMISSIONS, CAMERA_PERMISSIONS, CONTACTS_PERMISSIONS, ALWAYS_LOCATION_PERMISSIONS,
