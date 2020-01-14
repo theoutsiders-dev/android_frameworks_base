@@ -5814,51 +5814,6 @@ public final class Settings {
         public static final String LOCK_SCREEN_VISUALIZER_CUSTOM_COLOR = "lock_screen_visualizer_custom_color";
 
         /**
-         * Whether to change the color of the qs panel
-         * @hide
-         */
-        public static final String QS_PANEL_BG_COLOR = "qs_panel_bg_color";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_COLOR_VALIDATOR = ANY_INTEGER_VALIDATOR;
-
-        /**
-         * Color of the qs panel evaluated from wallpaper
-         * @hide
-         */
-        public static final String QS_PANEL_BG_COLOR_WALL = "qs_panel_bg_color_wall";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_COLOR_WALL_VALIDATOR = ANY_INTEGER_VALIDATOR;
-
-        /**
-         * Whether to change the color of the qs panel based on wallpaper
-         * @hide
-         */
-        public static final String QS_PANEL_BG_USE_WALL = "qs_panel_bg_use_wall";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_USE_WALL_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to use framework styles and resources on qs panel
-         * @hide
-         */
-        public static final String QS_PANEL_BG_USE_FW = "qs_panel_bg_use_fw";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_USE_FW_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
-         * Whether to use framework styles and resources on qs panel
-         * @hide
-         */
-        public static final String QS_PANEL_BG_USE_ACCENT = "qs_panel_bg_use_accent";
-
-        /** @hide */
-        private static final Validator QS_PANEL_BG_USE_ACCENT_VALIDATOR = BOOLEAN_VALIDATOR;
-
-        /**
          * Show Settings icon in QS Footer
          *
          * @hide
@@ -6037,11 +5992,6 @@ public final class Settings {
             PULSE_BRIGHTNESS,
             DOZE_BRIGHTNESS,
             SENSOR_BLOCK,
-            QS_PANEL_BG_COLOR,
-            QS_PANEL_BG_COLOR_WALL,
-            QS_PANEL_BG_USE_WALL,
-            QS_PANEL_BG_USE_FW,
-            QS_PANEL_BG_USE_ACCENT,
             GESTURE_PILL_TOGGLE,
         };
 
@@ -6245,11 +6195,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(SENSOR_BLOCK);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_COLOR);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_COLOR_WALL);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_WALL);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_FW);
-            PRIVATE_SETTINGS.add(QS_PANEL_BG_USE_ACCENT);
             PRIVATE_SETTINGS.add(DISPLAY_CUTOUT_HIDDEN);
             PRIVATE_SETTINGS.add(NETWORK_TRAFFIC_VIEW_LOCATION);
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
@@ -6411,11 +6356,6 @@ public final class Settings {
             VALIDATORS.put(DOZE_BRIGHTNESS, DOZE_BRIGHTNESS_VALIDATOR);
             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES, ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
             VALIDATORS.put(SENSOR_BLOCK, SENSOR_BLOCK_VALIDATOR);
-            VALIDATORS.put(QS_PANEL_BG_COLOR, QS_PANEL_BG_COLOR_VALIDATOR);
-            VALIDATORS.put(QS_PANEL_BG_COLOR_WALL, QS_PANEL_BG_COLOR_WALL_VALIDATOR);
-            VALIDATORS.put(QS_PANEL_BG_USE_WALL, QS_PANEL_BG_USE_WALL_VALIDATOR);
-            VALIDATORS.put(QS_PANEL_BG_USE_FW, QS_PANEL_BG_USE_FW_VALIDATOR);
-            VALIDATORS.put(QS_PANEL_BG_USE_ACCENT, QS_PANEL_BG_USE_ACCENT_VALIDATOR);
             VALIDATORS.put(DISPLAY_CUTOUT_HIDDEN, DISPLAY_CUTOUT_HIDDEN_VALIDATOR);
             VALIDATORS.put(GESTURE_PILL_TOGGLE, GESTURE_PILL_TOGGLE_VALIDATOR);
         }
