@@ -308,8 +308,7 @@ public class DozeSensors {
 
             // The default prox sensor can be noisy, so let's use a prox gated brightness sensor
             // if available.
-            Sensor sensor = DozeSensors.findBrightnessSensorForProximity(mContext,
-                    mSensorManager);
+            Sensor sensor = DozeSensors.findBrightnessSensorForProximity(mContext, mSensorManager);
             mUsingBrightnessSensor = sensor != null;
             if (sensor == null) {
                 sensor = mSensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY);
