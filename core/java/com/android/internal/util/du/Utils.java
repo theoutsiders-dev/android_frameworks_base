@@ -43,7 +43,6 @@ import android.os.ServiceManager;
 import android.os.SystemProperties;
 import android.os.SystemClock;
 import android.os.Process;
-import android.text.TextUtils;
 import android.view.IWindowManager;
 import android.view.WindowManagerGlobal;
 import android.view.WindowManager;
@@ -253,10 +252,21 @@ public class Utils {
     }
 
     public static boolean hasNotch(Context context) {
-        String displayCutout = context.getResources().getString(R.string.config_mainBuiltInDisplayCutout);
-        boolean maskDisplayCutout = context.getResources().getBoolean(R.bool.config_maskMainBuiltInDisplayCutout);
-        boolean displayCutoutExists = (!TextUtils.isEmpty(displayCutout) && !maskDisplayCutout);
-        return displayCutoutExists;
+        int result = 0;
+        int resid;
+        int resourceId = context.getResources().getIdentifier(
+                "status_bar_height", "dimen", "android");
+        resid = context.getResources().getIdentifier("config_fillMainBuiltInDisplayCutout",
+                "bool", "android");
+        if (resid > 0) {
+            return context.getResources().getBoolean(resid);
+        }
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        float px = 24 * (metrics.densityDpi / 160f);
+        return result > Math.round(px);
     }
 
     public static void sendKeycode(int keycode) {
