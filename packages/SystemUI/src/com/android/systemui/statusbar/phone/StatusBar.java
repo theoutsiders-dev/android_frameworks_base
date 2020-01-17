@@ -819,8 +819,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             ex.rethrowFromSystemServer();
         }
 
-        initCoreOverlays();
-
         createAndAddWindows(result);
 
         // Make sure we always have the most current wallpaper info.
@@ -897,26 +895,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         int disabledFlags2 = result.mDisabledFlags2;
         Dependency.get(InitController.class).addPostInitTask(
                 () -> setUpDisableFlags(disabledFlags1, disabledFlags2));
-    }
-
-    private void initCoreOverlays(){
-        boolean aodAvailable = mContext.getResources().getBoolean(
-                    com.android.internal.R.bool.config_dozeAlwaysOnDisplayAvailable);
-        try{
-            mOverlayManager.setEnabled("com.google.android.pixel.setupwizard.overlay",
-                true, mLockscreenUserManager.getCurrentUserId());
-        } catch (RemoteException ignored) {
-        }
-        try{
-            mOverlayManager.setEnabled("com.google.android.pixel.setupwizard.overlay.aod",
-                !aodAvailable, mLockscreenUserManager.getCurrentUserId());
-        } catch (RemoteException ignored) {
-        }
-        try{
-            mOverlayManager.setEnabled("com.google.android.apps.nexuslauncher.overlay",
-                true, mLockscreenUserManager.getCurrentUserId());
-        } catch (RemoteException ignored) {
-        }
     }
 
     // ================================================================================
