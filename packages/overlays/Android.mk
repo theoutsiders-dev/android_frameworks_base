@@ -40,20 +40,20 @@ LOCAL_REQUIRED_MODULES := \
 	FontCircularStdOverlay \
 	FontSlateForOnePlusOverlay \
 	IconPackCircularAndroidOverlay \
-	IconPackCircularPixelLauncherOverlay \
-	IconPackCircularPixelThemePickerOverlay \
+	IconPackCircularLauncherOverlay \
 	IconPackCircularSettingsOverlay \
 	IconPackCircularSystemUIOverlay \
+	IconPackCircularThemePickerOverlay \
 	IconPackFilledAndroidOverlay \
-	IconPackFilledPixelLauncherOverlay \
-	IconPackFilledPixelThemePickerOverlay \
+	IconPackFilledLauncherOverlay \
 	IconPackFilledSettingsOverlay \
 	IconPackFilledSystemUIOverlay \
+	IconPackFilledThemePickerOverlay \
 	IconPackRoundedAndroidOverlay \
-	IconPackRoundedPixelLauncherOverlay \
-	IconPackRoundedPixelThemePickerOverlay \
+	IconPackRoundedLauncherOverlay \
 	IconPackRoundedSettingsOverlay \
 	IconPackRoundedSystemUIOverlay \
+	IconPackRoundedThemePickerOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarMode2ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
