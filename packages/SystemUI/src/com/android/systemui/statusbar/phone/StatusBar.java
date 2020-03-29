@@ -143,6 +143,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.internal.annotations.VisibleForTesting;
@@ -381,7 +382,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     /**
      * The {@link StatusBarState} of the status bar.
      */
-    protected int mState;
+    protected static int mState;
     protected boolean mBouncerShowing;
 
     private PhoneStatusBarPolicy mIconPolicy;
@@ -541,6 +542,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     public ImageView mQSBlurView;
     private boolean blurperformed = false;
 
+    private static Context mStaticContext;
+    private static ImageButton mDismissAllButton;
+    protected static NotificationPanelView mStaticNotificationPanel;
+    public static boolean mClearableNotifications;
+
     // ensure quick settings is disabled until the current user makes it through the setup wizard
     @VisibleForTesting
     protected boolean mUserSetup = false;
@@ -696,7 +702,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             (SysuiStatusBarStateController) Dependency.get(StatusBarStateController.class);
 
     private boolean mDisplayCutoutHidden;
-    private boolean mUnexpandedQSBrightnessSlider;
 
     private final KeyguardUpdateMonitorCallback mUpdateCallback =
             new KeyguardUpdateMonitorCallback() {
@@ -947,6 +952,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     // ================================================================================
     protected void makeStatusBarView(@Nullable RegisterStatusBarResult result) {
         final Context context = mContext;
+        mStaticContext = mContext;
         updateDisplaySize(); // populates mDisplayMetrics
         updateResources();
         updateTheme();
@@ -955,6 +961,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         mStatusBarWindow.setService(this);
         mStatusBarWindow.setBypassController(mKeyguardBypassController);
         mStatusBarWindow.setOnTouchListener(getStatusBarWindowTouchListener());
+        mDismissAllButton = mStatusBarWindow.findViewById(R.id.clear_notifications);
 
         mMinBrightness = context.getResources().getInteger(
                 com.android.internal.R.integer.config_screenBrightnessDim);
@@ -962,6 +969,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         // TODO: Deal with the ugliness that comes from having some of the statusbar broken out
         // into fragments, but the rest here, it leaves some awkward lifecycle and whatnot.
         mNotificationPanel = mStatusBarWindow.findViewById(R.id.notification_panel);
+        mStaticNotificationPanel = mNotificationPanel;
         mStackScroller = mStatusBarWindow.findViewById(R.id.notification_stack_scroller);
         mZenController.addCallback(this);
         mQSBlurView = mStatusBarWindow.findViewById(R.id.qs_blur);
@@ -1317,6 +1325,52 @@ public class StatusBar extends SystemUI implements DemoMode,
                 || action == MotionEvent.ACTION_CANCEL) {
             mHandler.removeCallbacks(mLongPressBrightnessChange);
         }
+    }
+
+    public static void setHasClearableNotifications(boolean state) {
+        mClearableNotifications = state;
+    }
+
+    public static void setDismissAllVisible(boolean visible) {
+
+        if(mClearableNotifications && mState != StatusBarState.KEYGUARD && visible && isDismissAllButtonEnabled()) {
+            mDismissAllButton.setVisibility(View.VISIBLE);
+            int DismissAllAlpha = Math.round(255.0f * mStaticNotificationPanel.getExpandedFraction());
+            mDismissAllButton.setAlpha(DismissAllAlpha);
+            mDismissAllButton.getBackground().setAlpha(DismissAllAlpha);
+        } else {
+            mDismissAllButton.setAlpha(0);
+            mDismissAllButton.getBackground().setAlpha(0);
+            mDismissAllButton.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public static void updateDismissAllButton(int iconcolor) {
+        if (mDismissAllButton != null) {
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
+            layoutParams.width = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_width);
+            layoutParams.height = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
+            layoutParams.bottomMargin = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
+            mDismissAllButton.setElevation(mStaticContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
+
+            mDismissAllButton.setColorFilter(iconcolor);
+            mDismissAllButton.setBackground(mStaticContext.getResources().getDrawable(R.drawable.oos_dismiss_all_bcg));
+        }
+    }
+
+    public static void updateDismissAllButtonOnlyDimens() {
+        if (mDismissAllButton != null) {
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mDismissAllButton.getLayoutParams();
+            layoutParams.width = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_width);
+            layoutParams.height = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_height);
+            layoutParams.bottomMargin = mStaticContext.getResources().getDimensionPixelSize(R.dimen.dismiss_all_button_margin_bottom);
+            mDismissAllButton.setElevation(mStaticContext.getResources().getDimension(R.dimen.dismiss_all_button_elevation));
+        }
+    }
+
+    private static boolean isDismissAllButtonEnabled() {
+        return Settings.System.getInt(mStaticContext.getContentResolver(),
+                Settings.System.DISMISS_ALL_BUTTON, 0) != 0;
     }
 
     protected QS createDefaultQSFragment() {
@@ -1770,6 +1824,11 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void updateAreThereNotifications() {
+        if (mNotificationPanel.hasActiveClearableNotifications()) {
+            mClearableNotifications = true;
+        } else {
+            mClearableNotifications = false;
+        }
         if (SPEW) {
             final boolean clearable = hasActiveNotifications() &&
                     mNotificationPanel.hasActiveClearableNotifications();
@@ -2263,9 +2322,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                     Settings.System.QS_BLUR_INTENSITY),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED),
-                    false, this, UserHandle.USER_ALL);
-            resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.LONG_BACK_SWIPE_TIMEOUT),
                     false, this, UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
@@ -2315,8 +2371,6 @@ public class StatusBar extends SystemUI implements DemoMode,
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.QS_BLUR_ALPHA)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.QS_BLUR_INTENSITY))) {
                 updateBlurVisibility();
-            } else if (uri.equals(Settings.System.getUriFor(Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED))) {
-                updateBrightnessSliderOverlay();
             } else if (uri.equals(Settings.System.getUriFor(Settings.System.BACK_SWIPE_EXTENDED)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.LONG_BACK_SWIPE_TIMEOUT)) ||
                     uri.equals(Settings.System.getUriFor(Settings.System.LEFT_LONG_BACK_SWIPE_ACTION)) ||
@@ -2454,23 +2508,6 @@ public class StatusBar extends SystemUI implements DemoMode,
                 try {
                     mOverlayManager.setEnabled("org.pixelexperience.overlay.hidecutout",
                                 mDisplayCutoutHidden, mLockscreenUserManager.getCurrentUserId());
-                } catch (RemoteException ignored) {
-                }
-            });
-        }
-    }
-
-    public void updateBrightnessSliderOverlay() {
-        boolean UnexpandedQSBrightnessSlider = Settings.System.getIntForUser(mContext.getContentResolver(),
-                        Settings.System.BRIGHTNESS_SLIDER_QS_UNEXPANDED, 0, UserHandle.USER_CURRENT) == 1;
-        if (mUnexpandedQSBrightnessSlider != UnexpandedQSBrightnessSlider){
-            mUnexpandedQSBrightnessSlider = UnexpandedQSBrightnessSlider;
-            mUiOffloadThread.submit(() -> {
-                final IOverlayManager mOverlayManager = IOverlayManager.Stub.asInterface(
-                                ServiceManager.getService(Context.OVERLAY_SERVICE));
-                try {
-                    mOverlayManager.setEnabled("com.extendedui.overlay.brightnessslider",
-                                mUnexpandedQSBrightnessSlider, mLockscreenUserManager.getCurrentUserId());
                 } catch (RemoteException ignored) {
                 }
             });
@@ -4537,6 +4574,9 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     @Override
     public void onStateChanged(int newState) {
+        if (mState != newState) {
+            setDismissAllVisible(true);
+        }
         mState = newState;
         updateReportRejectedTouchVisibility();
         updateDozing();
