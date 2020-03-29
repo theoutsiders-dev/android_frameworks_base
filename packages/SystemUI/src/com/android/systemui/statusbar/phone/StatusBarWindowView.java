@@ -150,7 +150,7 @@ public class StatusBarWindowView extends FrameLayout {
                 mService.handleSystemKey(KeyEvent.KEYCODE_MEDIA_NEXT);
                 return true;
             }
-            if (mDoubleTapEnabled || mSingleTapEnabled || (mDoubleTapEnabledNative == 1) || mDoubleTapDozeEnabled) {
+            if (mDoubleTapEnabled || mSingleTapEnabled || mDoubleTapEnabledNative || mDoubleTapDozeEnabled) {
                 mService.wakeUpIfDozing(SystemClock.uptimeMillis(), StatusBarWindowView.this,
                         "DOUBLE_TAP");
                 return true;
@@ -198,9 +198,9 @@ public class StatusBarWindowView extends FrameLayout {
         Dependency.get(TunerService.class).addTunable(mTunable,
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE,
                 Settings.Secure.DOZE_TAP_SCREEN_GESTURE,
+                Settings.System.DOZE_TRIGGER_DOUBLETAP,
                 Settings.Secure.DOUBLE_TAP_TO_WAKE);
         mStaticContext = context;
-                Settings.System.DOZE_TRIGGER_DOUBLETAP);
     }
 
     @Override
