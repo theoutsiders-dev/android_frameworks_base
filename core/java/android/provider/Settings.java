@@ -4635,7 +4635,7 @@ public final class Settings {
 
         /** @hide */
         private static final Validator NAVIGATION_HANDLE_WIDTH_VALIDATOR =
-                ANY_INTEGER_VALIDATOR;
+                ANY_INTEGER_VALIDATOR;        
 
         /**
          * @hide
