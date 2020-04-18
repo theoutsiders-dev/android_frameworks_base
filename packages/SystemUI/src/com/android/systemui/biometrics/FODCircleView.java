@@ -163,9 +163,7 @@ public class FODCircleView extends ImageView {
         @Override
         public void onBiometricAuthenticated(int userId, BiometricSourceType biometricSourceType) {
             super.onBiometricAuthenticated(userId, biometricSourceType);
-            if (biometricSourceType == BiometricSourceType.FINGERPRINT){
-                mIsAuthenticated = true;
-            }
+            mIsAuthenticated = true;
         }
 
         @Override
@@ -183,8 +181,7 @@ public class FODCircleView extends ImageView {
         @Override
         public void onBiometricHelp(int msgId, String helpString,
                 BiometricSourceType biometricSourceType) {
-            if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
-                    msgId == -1){ // Auth error
+            if (msgId == -1){ // Auth error
                 hideCircle();
                 mHandler.post(() -> mFODAnimation.hideFODanimation());
             }
