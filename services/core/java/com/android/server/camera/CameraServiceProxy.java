@@ -71,6 +71,8 @@ public class CameraServiceProxy extends SystemService
 
     public static final String CAMERA_SERVICE_PROXY_BINDER_NAME = "media.camera.proxy";
 
+    public static final String FACESENSE_CLIENT_NAME = "co.aospa.facesense";
+
     // Flags arguments to NFC adapter to enable/disable NFC
     public static final int DISABLE_POLLING_FLAGS = 0x1000;
     public static final int ENABLE_POLLING_FLAGS = 0x0000;
@@ -133,6 +135,7 @@ public class CameraServiceProxy extends SystemService
 
     private final @NfcNotifyState int mNotifyNfc;
     private boolean mLastNfcPollState = true;
+    private String mClientName;
 
     /**
      * Structure to track camera usage
@@ -230,7 +233,11 @@ public class CameraServiceProxy extends SystemService
             if (mSendCameraStatusIntent && facing == ICameraServiceProxy.CAMERA_FACING_FRONT) {
                 switch (newCameraState) {
                    case ICameraServiceProxy.CAMERA_STATE_OPEN : {
+<<<<<<< HEAD
                        mOpenEvent = SystemClock.elapsedRealtime();
+=======
+                       mClientName = clientName;
+>>>>>>> 2f7f66e7d57... PopupCamera: Don't show popup prompt when using FaceSense
                        if (SystemClock.elapsedRealtime() - mClosedEvent < CAMERA_EVENT_DELAY_TIME) {
                            mHandler.removeMessages(MSG_CAMERA_CLOSED);
                        }
@@ -276,9 +283,45 @@ public class CameraServiceProxy extends SystemService
             } break;
             case MSG_CAMERA_CLOSED: {
                 sendCameraStateIntent("0");
+<<<<<<< HEAD
             } break;
             case MSG_CAMERA_OPEN: {
                 sendCameraStateIntent("1");
+=======
+                if (mAlertDialog != null && mAlertDialog.isShowing()) {
+                    mAlertDialog.dismiss();
+                }
+            } break;
+            case MSG_CAMERA_OPENED: {
+                if (mScreenOn || mClientName.equals(FACESENSE_CLIENT_NAME)) {
+                    sendCameraStateIntent("1");
+                } else {
+                    if (mAlertDialog == null) {
+                        mAlertDialog = new AlertDialog.Builder(mContext)
+                            .setMessage(com.android.internal.R.string.popup_camera_dialog_message)
+                            .setNegativeButton(com.android.internal.R.string
+                                    .popup_camera_dialog_no, (dialog, which) -> {
+                                // Go back to home screen
+                                Intent intent = new Intent(Intent.ACTION_MAIN);
+                                intent.addCategory(Intent.CATEGORY_HOME);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                mContext.startActivity(intent);
+                            })
+                            .setPositiveButton(com.android.internal.R.string
+                                    .popup_camera_dialog_raise, (dialog, which) -> {
+                                // Raise the camera
+                                sendCameraStateIntent("1");
+                            })
+                            .create();
+                        mAlertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ERROR);
+                        mAlertDialog.setCanceledOnTouchOutside(false);
+                    }
+                    mAlertDialog.show();
+                }
+            } break;
+            case MSG_SCREEN_ON: {
+                mScreenOn = true;
+>>>>>>> 2f7f66e7d57... PopupCamera: Don't show popup prompt when using FaceSense
             } break;
             default: {
                 Slog.e(TAG, "CameraServiceProxy error, invalid message: " + msg.what);
